@@ -15,6 +15,9 @@ public class Main {
         System.out.println(RandomStringUtils.random(20, true, true));
         System.out.println(RandomStringUtils.random(20, true, true));
         System.out.println(RandomStringUtils.random(20, true, true));
+        System.out.println(RandomStringUtils.random(20, true, true));
+        System.out.println(RandomStringUtils.random(20, true, true));
+        System.out.println(RandomStringUtils.random(20, true, true));
 
     }
 }
