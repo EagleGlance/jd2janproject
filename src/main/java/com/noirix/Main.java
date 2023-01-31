@@ -1,6 +1,10 @@
 package com.noirix;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import com.noirix.domain.User;
+import com.noirix.repository.UserRepository;
+import com.noirix.repository.UserRepositoryImpl;
+
+import java.util.List;
 
 public class Main {
 
@@ -8,11 +12,14 @@ public class Main {
     //Ctrl+Alt+L - formatting
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
 
-        System.out.println(RandomStringUtils.random(10, true, true));
-        System.out.println(RandomStringUtils.random(10, true, true));
-        System.out.println(RandomStringUtils.random(20, true, true));
+        UserRepository userRepository = new UserRepositoryImpl();
+
+        List<User> all = userRepository.findAll();
+
+        for (User user : all) {
+            System.out.println(user);
+        }
 
     }
 }
