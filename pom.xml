@@ -6,7 +6,7 @@
 
     <groupId>com.noirix</groupId>
     <artifactId>jd2maventest</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -18,7 +18,7 @@
         <maven.compile.plugin.version>3.8.1</maven.compile.plugin.version>
     </properties>
 
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <dependencies>
 
@@ -33,6 +33,25 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons.io.version}</version>
+        </dependency>
+
+        <!--        Web app dependencies-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.3</version>
         </dependency>
 
     </dependencies>
