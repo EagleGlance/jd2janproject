@@ -58,15 +58,15 @@
 
     <build>
         <plugins>
-<!--            <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>${maven.war.plugin.version}</version>
-            </plugin>-->
+                <version>3.3.1</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compile.plugin.version}</version>
+                <version>3.8.1</version>
             </plugin>
         </plugins>
     </build>
