@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
    http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-<!--    <servlet>-->
-<!--        <servlet-name>MainServlet</servlet-name>-->
-<!--        <servlet-class>com.noirix.controller.FrontController</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>MainServlet</servlet-name>-->
-<!--        <url-pattern>/FrontController</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet>
+        <servlet-name>MainServlet</servlet-name>
+        <servlet-class>com.noirix.controller.FrontController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MainServlet</servlet-name>
+        <url-pattern>/FrontController</url-pattern>
+    </servlet-mapping>
 
     <!--    localhost:8080/application/FrontController-->
     <!--    https://kalevich.com/application/FrontController-->
@@ -35,8 +35,15 @@
         <servlet-name>ByeByeWeb</servlet-name>
         <url-pattern>/bye</url-pattern>
     </servlet-mapping>
+    
+    <listener>
+        <listener-class>com.noirix.listeners.StartupCustomListener</listener-class>
+    </listener>
 
     <!--    localhost:8080/application/bye-->
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
 
 </web-app>
 
