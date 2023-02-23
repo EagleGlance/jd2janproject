@@ -11,7 +11,7 @@ import java.util.Map;
 public class UserAggServiceImpl implements UserAggregationService {
 
     private final UserRepository userRepository = new UserRepositoryImpl();
-    private final UserService userService = new UserServiceImpl();
+//    private final UserService userService = new UserServiceImpl();
 
     @Override
     public Map<String, Object> getStats() {

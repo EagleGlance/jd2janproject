@@ -1,6 +1,7 @@
 package com.noirix.controller;
 
 import com.noirix.domain.User;
+import com.noirix.repository.UserRepositoryImpl;
 import com.noirix.service.UserService;
 import com.noirix.service.UserServiceImpl;
 
@@ -18,7 +19,7 @@ public class FrontController extends HttpServlet {
 //    public FrontController() {
 //        super();
 //    }
-    private final UserService userService = new UserServiceImpl();
+    private final UserService userService = new UserServiceImpl(new UserRepositoryImpl());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
