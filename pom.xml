@@ -16,6 +16,7 @@
         <commons.io.version>2.11.0</commons.io.version>
         <maven.war.plugin.version>3.3.1</maven.war.plugin.version>
         <maven.compile.plugin.version>3.8.1</maven.compile.plugin.version>
+        <spring.version>5.3.25</spring.version>
     </properties>
 
     <packaging>war</packaging>
@@ -58,6 +59,24 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.5.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
         </dependency>
 
     </dependencies>

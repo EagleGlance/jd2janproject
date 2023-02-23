@@ -2,13 +2,23 @@ package com.noirix.service;
 
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
-import com.noirix.repository.UserRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+//id = userServiceImpl
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository = new UserRepositoryImpl();
+    @Autowired
+//    @Qualifier("userSecondRepositoryImpl")
+
+//    @Inject //JSR-330
+//    @Named("userRepositoryImpl")
+//    @Named("userRepositoryImpl")
+
+    private UserRepository userRepository;
 
     @Override
     public User findOne(Long id) {

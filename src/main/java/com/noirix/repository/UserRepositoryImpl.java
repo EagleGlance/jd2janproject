@@ -2,6 +2,7 @@ package com.noirix.repository;
 
 import com.noirix.domain.User;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +12,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
+//bean id=userRepositoryImpl   class=UserRepositoryImpl
+//@Component
 public class UserRepositoryImpl implements UserRepository {
 
     public static final String POSTRGES_DRIVER_NAME = "org.postgresql.Driver";
@@ -32,8 +36,8 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> findAll() {
 
         /*
-        * 1) Driver Manager - getting connection from DB
-        * */
+         * 1) Driver Manager - getting connection from DB
+         * */
 
         final String findAllQuery = "select * from users order by id desc";
 
