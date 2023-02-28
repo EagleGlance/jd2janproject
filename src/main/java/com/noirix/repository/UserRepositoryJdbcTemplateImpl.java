@@ -1,14 +1,25 @@
 package com.noirix.repository;
 
 import com.noirix.domain.User;
+import com.noirix.repository.rowmapper.UserRowMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 @Primary
-public class UserSecondRepositoryImpl implements UserRepository {
+@RequiredArgsConstructor
+public class UserRepositoryJdbcTemplateImpl implements UserRepository {
+
+    private final JdbcTemplate jdbcTemplate;
+
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    private final UserRowMapper userRowMapper;
 
     @Override
     public User findOne(Long id) {
@@ -17,7 +28,7 @@ public class UserSecondRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return null;
+        return jdbcTemplate.query("select * from users", userRowMapper);
     }
 
     @Override
