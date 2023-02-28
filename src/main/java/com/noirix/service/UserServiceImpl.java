@@ -2,6 +2,7 @@ package com.noirix.service;
 
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
+import com.noirix.util.RandomValuesGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +20,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private final RandomValuesGenerator randomValuesGenerator;
+
+    public UserServiceImpl(UserRepository userRepository, RandomValuesGenerator randomValuesGenerator) {
         this.userRepository = userRepository;
+        this.randomValuesGenerator = randomValuesGenerator;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.noirix;
 
+import com.noirix.configuration.DatabaseProperties;
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
 import com.noirix.repository.UserRepositoryImpl;
@@ -13,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        UserRepository userRepository = new UserRepositoryImpl();
+        UserRepository userRepository = new UserRepositoryImpl(new DatabaseProperties());
 
         List<User> all = userRepository.findAll();
 

@@ -1,5 +1,6 @@
 package com.noirix.repository;
 
+import com.noirix.configuration.DatabaseProperties;
 import com.noirix.domain.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -12,25 +13,23 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.noirix.repository.columns.UserColumns.BIRTH_DATE;
+import static com.noirix.repository.columns.UserColumns.FULL_NAME;
+import static com.noirix.repository.columns.UserColumns.ID;
+import static com.noirix.repository.columns.UserColumns.NAME;
+import static com.noirix.repository.columns.UserColumns.SURNAME;
+import static com.noirix.repository.columns.UserColumns.WEIGHT;
+
 @Repository
 //bean id=userRepositoryImpl   class=UserRepositoryImpl
 //@Component
 public class UserRepositoryImpl implements UserRepository {
 
-    public static final String POSTRGES_DRIVER_NAME = "org.postgresql.Driver";
-    public static final String DATABASE_URL = "jdbc:postgresql://localhost:";
-    public static final int DATABASE_PORT = 5432;
-    public static final String DATABASE_NAME = "/apptest";
-    public static final String DATABASE_LOGIN = "postgres";
-    public static final String DATABASE_PASSWORD = "root";
+    private final DatabaseProperties properties;
 
-    private static final String ID = "id";
-    private static final String NAME = "name";
-    private static final String SURNAME = "surname";
-    private static final String BIRTH_DATE = "birth_date";
-    private static final String FULL_NAME = "full_name";
-    private static final String WEIGHT = "weight";
-
+    public UserRepositoryImpl(DatabaseProperties properties) {
+        this.properties = properties;
+    }
 
     @Override
     public List<User> findAll() {
@@ -80,7 +79,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private void registerDriver() {
         try {
-            Class.forName(POSTRGES_DRIVER_NAME);
+            Class.forName(properties.getDriverName());
         } catch (ClassNotFoundException e) {
             System.err.println("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
@@ -88,9 +87,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private Connection getConnection() {
-        String jdbcURL = StringUtils.join(DATABASE_URL, DATABASE_PORT, DATABASE_NAME);
+        String jdbcURL = StringUtils.join(properties.getUrl(), properties.getPort(), properties.getName());
         try {
-            return DriverManager.getConnection(jdbcURL, DATABASE_LOGIN, DATABASE_PASSWORD);
+            return DriverManager.getConnection(jdbcURL, properties.getLogin(), properties.getPassword());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
