@@ -2,6 +2,7 @@ package com.noirix.repository;
 
 import com.noirix.configuration.DatabaseProperties;
 import com.noirix.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -21,15 +22,12 @@ import static com.noirix.repository.columns.UserColumns.SURNAME;
 import static com.noirix.repository.columns.UserColumns.WEIGHT;
 
 @Repository
+@RequiredArgsConstructor
 //bean id=userRepositoryImpl   class=UserRepositoryImpl
 //@Component
 public class UserRepositoryImpl implements UserRepository {
 
     private final DatabaseProperties properties;
-
-    public UserRepositoryImpl(DatabaseProperties properties) {
-        this.properties = properties;
-    }
 
     @Override
     public List<User> findAll() {
