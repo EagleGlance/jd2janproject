@@ -4,6 +4,8 @@ import com.noirix.configuration.DatabaseProperties;
 import com.noirix.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -23,11 +25,14 @@ import static com.noirix.repository.columns.UserColumns.WEIGHT;
 
 @Repository
 @RequiredArgsConstructor
+@Primary
 //bean id=userRepositoryImpl   class=UserRepositoryImpl
 //@Component
 public class UserRepositoryImpl implements UserRepository {
 
     private final DatabaseProperties properties;
+
+    private final Logger logger = Logger.getLogger(UserRepositoryImpl.class);
 
     @Override
     public List<User> findAll() {
@@ -35,6 +40,8 @@ public class UserRepositoryImpl implements UserRepository {
         /*
          * 1) Driver Manager - getting connection from DB
          * */
+
+        logger.info("Start of findAll method");
 
         final String findAllQuery = "select * from users order by id desc";
 
@@ -49,9 +56,12 @@ public class UserRepositoryImpl implements UserRepository {
             while (rs.next()) {
                 result.add(parseResultSet(rs));
             }
+
+            logger.info("End of findAll method");
+
             return result;
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage(), e);
             throw new RuntimeException("SQL Issues!");
         }
     }

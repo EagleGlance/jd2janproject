@@ -3,7 +3,6 @@ package com.noirix.repository;
 import com.noirix.domain.User;
 import com.noirix.repository.rowmapper.UserRowMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-@Primary
+//@Primary
 @RequiredArgsConstructor
 public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 

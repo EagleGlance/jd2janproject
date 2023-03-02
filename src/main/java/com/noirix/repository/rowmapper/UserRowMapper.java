@@ -21,13 +21,16 @@ public class UserRowMapper implements RowMapper<User> {
         User user;
 
         try {
-            user = new User();
-            user.setId(rs.getLong(ID));
-            user.setName(rs.getString(NAME));
-            user.setSurname(rs.getString(SURNAME));
-            user.setBirthDate(rs.getTimestamp(BIRTH_DATE));
-            user.setFullName(rs.getString(FULL_NAME));
-            user.setWeight(rs.getDouble(WEIGHT));
+
+            user = User.builder()
+                    .id(rs.getLong(ID))
+                    .name(rs.getString(NAME))
+                    .surname(rs.getString(SURNAME))
+                    .birthDate(rs.getTimestamp(BIRTH_DATE))
+                    .fullName(rs.getString(FULL_NAME))
+                    .weight(rs.getDouble(WEIGHT))
+                    .build();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

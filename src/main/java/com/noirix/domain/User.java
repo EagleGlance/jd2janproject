@@ -1,20 +1,18 @@
 package com.noirix.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.sql.Timestamp;
 
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@Data
+@Builder
 public class User {
 
     private Long id;
