@@ -66,7 +66,6 @@ public class CarRepositoryImpl implements CarRepository {
         Timestamp carCreated = car.getCreated();
         Timestamp carChanged = car.getChanged();
         String insertNewCarQuery = "INSERT INTO CARS (name, brand, price, user_id, created, changed) VALUES ('" + carName + "','" + carBrand + "','" + carPrice + "','" + carUserId + "','" + carCreated + "','" + carChanged + "')";
-        //String insertNewCarQuery = "INSERT INTO CARS (name, brand, price, user_id, created, changed) VALUES ('" + carName + "','" + carBrand + "'," + carPrice + "," + carUserId + "," + carCreated + "," + carChanged + ")";
         registerDriver();
         try {
             Connection connection = getConnection();
