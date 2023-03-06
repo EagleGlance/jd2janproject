@@ -95,6 +95,7 @@ public class CarRepositoryImpl implements CarRepository {
         Float carPrice = car.getPrice();
         List<Car> listOfCarInTableWithHigherPrice = findAll().stream()
                 .filter(x -> x.getPrice() > carPrice)
+                .limit(1L)
                 .collect(Collectors.toList());
         if (listOfCarInTableWithHigherPrice.size() == 0) {
             addNewCar(car);
