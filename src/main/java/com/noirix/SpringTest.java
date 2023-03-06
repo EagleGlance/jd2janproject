@@ -1,27 +1,24 @@
 package com.noirix;
 
-import com.noirix.repository.UserRepository;
-import com.noirix.service.UserService;
-import com.noirix.util.RandomValuesGenerator;
-import org.apache.log4j.Logger;
+import com.noirix.domain.Car;
+import com.noirix.repository.CarRepository;
+import com.noirix.service.CarService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.sql.Timestamp;
 
 public class SpringTest {
 
-    private static final Logger logger = Logger.getLogger(SpringTest.class);
-
     public static void main(String[] args) {
-//        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:application-context.xml");
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext("com.noirix");
+        CarRepository carRepository = applicationContext.getBean("carRepositoryImpl", CarRepository.class);
+        CarService carService = applicationContext.getBean("carServiceImpl", CarService.class);
 
-        //Object bean = applicationContext.getBean();
-//        UserRepository repository = applicationContext.getBean("userRepository", UserRepository.class);
-        UserRepository userRepository = applicationContext.getBean("userRepositoryImpl", UserRepository.class);
-        UserService userService = applicationContext.getBean("userServiceImpl", UserService.class);
-        RandomValuesGenerator randomValuesGenerator = applicationContext.getBean("getRandomGenerator", RandomValuesGenerator.class);
-
-        logger.info(userRepository.findAll());
-        logger.info(userService.findAll());
-        logger.info(randomValuesGenerator.generateRandomString());
+        System.out.println(carRepository.findAll());
+        System.out.println(carRepository.searchMostExpensiveCars());
+        Car car = new Car(new Long(0L), "DA11111-02", "Honda", new Float(119001.0f), new Long(5L), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), new Boolean(false));
+        carService.addNewCarIfItsPriceHighest(car);
+        //carService.deleteCarWithMaxPrice();
+        System.out.println(carService.searchMostExpensiveCars());
     }
 }
