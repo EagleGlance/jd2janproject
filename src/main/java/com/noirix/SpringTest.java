@@ -2,11 +2,7 @@ package com.noirix;
 
 import com.noirix.domain.Car;
 import com.noirix.repository.CarRepository;
-import com.noirix.repository.UserRepository;
 import com.noirix.service.CarService;
-import com.noirix.service.UserService;
-import com.noirix.util.RandomValuesGenerator;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.Timestamp;
