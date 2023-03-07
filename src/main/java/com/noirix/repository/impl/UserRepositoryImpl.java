@@ -1,7 +1,8 @@
-package com.noirix.repository;
+package com.noirix.repository.impl;
 
 import com.noirix.configuration.DatabaseProperties;
 import com.noirix.domain.User;
+import com.noirix.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -105,11 +106,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findOne(Long id) {
-        return null;
+        return findAll().stream().findFirst().get();
     }
 
     @Override
     public User create(User object) {
+
+
+        //get last id from sequence
+        //get object by id from table
         return null;
     }
 

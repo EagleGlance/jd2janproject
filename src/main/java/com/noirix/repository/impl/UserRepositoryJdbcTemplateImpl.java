@@ -1,6 +1,7 @@
-package com.noirix.repository;
+package com.noirix.repository.impl;
 
 import com.noirix.domain.User;
+import com.noirix.repository.UserRepository;
 import com.noirix.repository.rowmapper.UserRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;

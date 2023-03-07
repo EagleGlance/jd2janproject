@@ -20,7 +20,7 @@ public class SpringTest {
         UserService userService = applicationContext.getBean("userServiceImpl", UserService.class);
         RandomValuesGenerator randomValuesGenerator = applicationContext.getBean("getRandomGenerator", RandomValuesGenerator.class);
 
-        logger.info(userRepository.findAll());
+        logger.info(userRepository.findOne(1L));
         logger.info(userService.findAll());
         logger.info(randomValuesGenerator.generateRandomString());
     }

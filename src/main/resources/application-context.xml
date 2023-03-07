@@ -16,13 +16,13 @@
 <!--        <constructor-arg index="2" value="SpringUserSurname"/>-->
 <!--    </bean>-->
 
-<!--    <bean id="userRepository" class="com.noirix.repository.UserRepositoryImpl">-->
+<!--    <bean id="userRepository" class="com.noirix.repository.impl.UserRepositoryImpl">-->
 <!--&lt;!&ndash;        <constructor-arg index="0" value="10" type="java.lang.Long"/>&ndash;&gt;-->
 <!--&lt;!&ndash;        <constructor-arg index="1" value="SpringUserName"/>&ndash;&gt;-->
 <!--&lt;!&ndash;        <constructor-arg index="2" value="SpringUserSurname"/>&ndash;&gt;-->
 <!--    </bean>-->
 
-<!--    <bean id="userRepository" class="com.noirix.repository.UserRepositoryImpl">-->
+<!--    <bean id="userRepository" class="com.noirix.repository.impl.UserRepositoryImpl">-->
 <!--        &lt;!&ndash;        <constructor-arg index="0" value="10" type="java.lang.Long"/>&ndash;&gt;-->
 <!--        &lt;!&ndash;        <constructor-arg index="1" value="SpringUserName"/>&ndash;&gt;-->
 <!--        &lt;!&ndash;        <constructor-arg index="2" value="SpringUserSurname"/>&ndash;&gt;-->

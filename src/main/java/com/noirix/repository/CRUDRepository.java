@@ -11,7 +11,11 @@ public interface CRUDRepository <K, T> {
 //    Update
 //    Delete
 
-    T findOne(K id);
+//    Optional<T> findOne(K id); //
+//
+//    T findById(K id); //throw new EntityNotFoundException("User with id " + id + " ")
+
+    T findOne(K id); //
 
     List<T> findAll();
 

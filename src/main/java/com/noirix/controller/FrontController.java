@@ -2,7 +2,7 @@ package com.noirix.controller;
 
 import com.noirix.configuration.DatabaseProperties;
 import com.noirix.domain.User;
-import com.noirix.repository.UserRepositoryImpl;
+import com.noirix.repository.impl.UserRepositoryImpl;
 import com.noirix.service.UserService;
 import com.noirix.service.UserServiceImpl;
 import com.noirix.util.RandomValuesGenerator;

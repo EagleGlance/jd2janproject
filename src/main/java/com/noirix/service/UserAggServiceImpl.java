@@ -3,7 +3,7 @@ package com.noirix.service;
 import com.noirix.configuration.DatabaseProperties;
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
-import com.noirix.repository.UserRepositoryImpl;
+import com.noirix.repository.impl.UserRepositoryImpl;
 
 import java.util.HashMap;
 import java.util.List;
