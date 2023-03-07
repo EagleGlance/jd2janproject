@@ -16,7 +16,7 @@ public class SpringTest {
 
         System.out.println(carRepository.findAll());
         System.out.println(carRepository.searchMostExpensiveCars());
-        Car car = new Car(new Long(0L), "DA11111-02", "Honda", new Float(119001.0f), new Long(5L), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), new Boolean(false));
+        Car car = new Car(0L, "DA11111-02", "Honda", 119001.0f, 5L, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), Boolean.FALSE);
         carService.addNewCarIfItsPriceHighest(car);
         //carService.deleteCarWithMaxPrice();
         System.out.println(carService.searchMostExpensiveCars());
