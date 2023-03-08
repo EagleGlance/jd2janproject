@@ -7,7 +7,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -142,7 +147,20 @@ public class CarRepositoryImpl implements CarRepository {
 
     @Override
     public Car findOne(Long id) {
-        return null;
+        final String findOneById = "select * from cars where id = " + id;
+        Car car;
+        registerDriver();
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(findOneById)
+        ) {
+            rs.next();
+            car = parseResultSet(rs);
+            return car;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
     }
 
     @Override

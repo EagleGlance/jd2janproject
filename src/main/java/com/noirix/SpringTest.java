@@ -15,10 +15,12 @@ public class SpringTest {
         CarService carService = applicationContext.getBean("carServiceImpl", CarService.class);
 
         System.out.println(carRepository.findAll());
-        System.out.println(carRepository.searchMostExpensiveCars());
-        Car car = new Car(0L, "DA11111-02", "Honda", 119001.0f, 5L, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), Boolean.FALSE);
-        carService.addNewCarIfItsPriceHighest(car);
-        //carService.deleteCarWithMaxPrice();
-        System.out.println(carService.searchMostExpensiveCars());
+//        System.out.println(carRepository.searchMostExpensiveCars());
+//        Car car = new Car(0L, "DA11111-02", "Honda", 119001.0f, 5L, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), Boolean.FALSE);
+//        carService.addNewCarIfItsPriceHighest(car);
+//        //carService.deleteCarWithMaxPrice();
+//        System.out.println(carService.searchMostExpensiveCars());
+        System.out.println(carRepository.findOne(111l));
+        System.out.println(carService.findOne(111l));
     }
 }

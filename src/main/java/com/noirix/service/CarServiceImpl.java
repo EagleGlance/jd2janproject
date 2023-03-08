@@ -13,7 +13,7 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     @Override
     public Car findOne(Long id) {
-        return null;
+        return carRepository.findOne(id);
     }
 
     @Override
