@@ -165,7 +165,26 @@ public class CarRepositoryImpl implements CarRepository {
 
     @Override
     public Car create(Car object) {
-        return null;
+        addNewCar(object);
+        Long id = getIdOfLastAddedCar();
+        return findOne(id);
+    }
+
+    public Long getIdOfLastAddedCar() {
+        String findIdIdOfLastAddedCar = "select MAX(id) from cars";
+        long idCar;
+        registerDriver();
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(findIdIdOfLastAddedCar)
+        ) {
+            rs.next();
+            idCar = rs.getLong(1);
+            return idCar;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
     }
 
     @Override

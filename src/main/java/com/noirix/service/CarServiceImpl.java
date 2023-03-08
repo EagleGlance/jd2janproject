@@ -43,7 +43,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car create(Car object) {
-        return null;
+        return carRepository.create(object);
     }
 
     @Override
