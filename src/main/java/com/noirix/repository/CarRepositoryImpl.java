@@ -194,7 +194,15 @@ public class CarRepositoryImpl implements CarRepository {
 
     @Override
     public void delete(Long id) {
-
+        String deleteCarByIdQuery = "DELETE FROM CARS WHERE id = " + id;
+        try {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(deleteCarByIdQuery);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
     }
 }
 

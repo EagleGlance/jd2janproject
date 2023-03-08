@@ -27,5 +27,7 @@ public class SpringTest {
         Car car = new Car(0L, "B-777", "BMW", 115000.00f, 4L,
                 new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), Boolean.FALSE);
         System.out.println(carRepository.create(car));
+        carRepository.delete(4l);
+        System.out.println(carRepository.findAll());
     }
 }
