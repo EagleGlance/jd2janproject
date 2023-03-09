@@ -12,8 +12,7 @@ import java.util.List;
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     @Override
-    public Car findOne(Long id) {
-        return carRepository.findOne(id);
+    public Car findOne(Long id) { return carRepository.findOne(id);
     }
 
     @Override
@@ -42,18 +41,15 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car create(Car object) {
-        return carRepository.create(object);
+    public Car create(Car object) { return carRepository.create(object);
     }
 
     @Override
     public Car update(Car object) {
-        return null;
+        return carRepository.update(object);
     }
 
     @Override
-    public void delete(Long id) {
-        carRepository.delete(id);
+    public void delete(Long id) { carRepository.delete(id);
     }
 }
-

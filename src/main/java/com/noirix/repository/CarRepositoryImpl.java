@@ -70,7 +70,9 @@ public class CarRepositoryImpl implements CarRepository {
         Long carUserId = car.getUser_id();
         Timestamp carCreated = car.getCreated();
         Timestamp carChanged = car.getChanged();
-        String insertNewCarQuery = "INSERT INTO CARS (name, brand, price, user_id, created, changed) VALUES ('" + carName + "','" + carBrand + "','" + carPrice + "','" + carUserId + "','" + carCreated + "','" + carChanged + "')";
+        String insertNewCarQuery = "INSERT INTO CARS (name, brand, price, user_id, created, changed) VALUES " +
+                "('" + carName + "','" + carBrand + "','" + carPrice + "','" + carUserId + "','" + carCreated + "','"
+                + carChanged + "')";
         registerDriver();
         try {
             Connection connection = getConnection();
@@ -189,7 +191,18 @@ public class CarRepositoryImpl implements CarRepository {
 
     @Override
     public Car update(Car object) {
-        return null;
+        String updateCarQuery = "update cars set name = '" + object.getName() + "', brand = '" + object.getBrand() +
+                "', price = '" + object.getPrice() + "', user_id = '" + object.getUser_id() + "', created = '" +
+                object.getCreated() + "', changed = '" + object.getChanged() + "' where id = " + object.getId();
+        try {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(updateCarQuery);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
+        return findOne(object.getId());
     }
 
     @Override
@@ -205,4 +218,3 @@ public class CarRepositoryImpl implements CarRepository {
         }
     }
 }
-
