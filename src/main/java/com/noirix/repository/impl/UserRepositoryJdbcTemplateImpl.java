@@ -53,7 +53,7 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
         final String sqlQuery =
                 "select * " +
                         " from users " +
-                        " where name like '%" + query + "%' and " +
+                        " where lower(name) like '%" + query + "%' and " +
                         " weight > " + weight +
                         " order by id desc";
 

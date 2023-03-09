@@ -6,18 +6,21 @@ import com.noirix.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
 
 //    GET + /users = findAllUsers
@@ -28,7 +31,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView findAllUsers() {
 
         List<User> users = userService.findAll();
@@ -45,7 +48,7 @@ public class UserController {
     }
 
     //localhost:8080/users/1
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView findUserById(@PathVariable String id) {
 
         Long parsedUserId;
@@ -69,11 +72,13 @@ public class UserController {
     }
 
     //localhost:8080/users/search?query=some&weight=80
-    @RequestMapping(value = "/users/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
 /*    public ModelAndView searchUserByParam(@RequestParam("query") String query,
                                           @RequestParam("weight") String weight) {*/
 
-    public ModelAndView searchUserByParam(@ModelAttribute SearchCriteria criteria) {
+    public ModelAndView searchUserByParam(@Valid @ModelAttribute SearchCriteria criteria, BindingResult result) {
+
+        System.out.println(result);
 
         Double parsedWeight;
 
