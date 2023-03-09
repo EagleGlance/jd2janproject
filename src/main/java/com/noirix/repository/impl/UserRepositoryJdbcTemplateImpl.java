@@ -4,6 +4,7 @@ import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
 import com.noirix.repository.rowmapper.UserRowMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-//@Primary
+@Primary
 @RequiredArgsConstructor
 public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
@@ -28,7 +29,7 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return jdbcTemplate.query("select * from users", userRowMapper);
+        return jdbcTemplate.query("select * from users order by id desc", userRowMapper);
     }
 
     @Override

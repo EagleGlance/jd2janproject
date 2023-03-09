@@ -6,7 +6,6 @@ import com.noirix.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -26,9 +25,6 @@ import static com.noirix.repository.columns.UserColumns.WEIGHT;
 
 @Repository
 @RequiredArgsConstructor
-@Primary
-//bean id=userRepositoryImpl   class=UserRepositoryImpl
-//@Component
 public class UserRepositoryImpl implements UserRepository {
 
     private final DatabaseProperties properties;
