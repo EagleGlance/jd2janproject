@@ -24,7 +24,7 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
     @Override
     public User findOne(Long id) {
-        return null;
+        return jdbcTemplate.queryForObject("select * from users where id = " + id, userRowMapper);
     }
 
     @Override
