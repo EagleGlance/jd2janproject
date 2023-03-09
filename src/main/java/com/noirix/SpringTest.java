@@ -32,5 +32,6 @@ public class SpringTest {
         car111.setPrice(99999.9f);
         carService.update(car111);
         System.out.println(carRepository.findOne(111l));
+
     }
 }
