@@ -48,7 +48,15 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
     }
 
     @Override
-    public void searchUser() {
+    public List<User> searchUser(String query, Double weight) {
 
+        final String sqlQuery =
+                "select * " +
+                        " from users " +
+                        " where name like '%" + query + "%' and " +
+                        " weight > " + weight +
+                        " order by id desc";
+
+        return jdbcTemplate.query(sqlQuery, userRowMapper);
     }
 }

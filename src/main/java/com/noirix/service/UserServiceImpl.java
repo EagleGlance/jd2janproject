@@ -57,4 +57,9 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
 
     }
+
+    @Override
+    public List<User> search(String query, Double weight) {
+        return userRepository.searchUser(query, weight);
+    }
 }

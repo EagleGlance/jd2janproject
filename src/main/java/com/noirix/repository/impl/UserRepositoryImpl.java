@@ -125,7 +125,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void searchUser() {
-
+    public List<User> searchUser(String query, Double weight) {
+        return null;
     }
 }

@@ -2,7 +2,9 @@ package com.noirix.repository;
 
 import com.noirix.domain.User;
 
+import java.util.List;
+
 public interface UserRepository extends CRUDRepository<Long, User> {
 
-    void searchUser();
+    List<User> searchUser(String query, Double weight);
 }

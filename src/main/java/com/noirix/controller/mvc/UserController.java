@@ -1,10 +1,12 @@
 package com.noirix.controller.mvc;
 
+import com.noirix.controller.requests.SearchCriteria;
 import com.noirix.domain.User;
 import com.noirix.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,6 +62,33 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userName", user.getFullName());
         modelAndView.addObject("users", Collections.singletonList(user));
+
+        modelAndView.setViewName("hello");
+
+        return modelAndView;
+    }
+
+    //localhost:8080/users/search?query=some&weight=80
+    @RequestMapping(value = "/users/search", method = RequestMethod.GET)
+/*    public ModelAndView searchUserByParam(@RequestParam("query") String query,
+                                          @RequestParam("weight") String weight) {*/
+
+    public ModelAndView searchUserByParam(@ModelAttribute SearchCriteria criteria) {
+
+        Double parsedWeight;
+
+        try {
+            parsedWeight = Double.parseDouble(criteria.getWeight());
+        } catch (NumberFormatException e) {
+            log.error("User param weight: " + criteria.getWeight() + " cannot be parsed to Double", e);
+            parsedWeight = 50D;
+        }
+
+        List<User> searchList = userService.search(criteria.getQuery(), parsedWeight);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userName", "Search Result");
+        modelAndView.addObject("users", searchList);
 
         modelAndView.setViewName("hello");
 

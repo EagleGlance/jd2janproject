@@ -18,7 +18,6 @@ public class UserAggServiceImpl implements UserAggregationService {
 
         List<User> users = userRepository.findAll();
         User one = userRepository.findOne(2L);
-        userRepository.searchUser();
 
         Map<String, Object> resultMap = new HashMap<>();
 
