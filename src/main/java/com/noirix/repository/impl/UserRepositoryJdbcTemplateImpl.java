@@ -5,6 +5,7 @@ import com.noirix.repository.UserRepository;
 import com.noirix.repository.rowmapper.UserRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Repository
 @Primary
+@Order(1)
 @RequiredArgsConstructor
 public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
@@ -58,5 +60,10 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
                         " order by id desc";
 
         return jdbcTemplate.query(sqlQuery, userRowMapper);
+    }
+
+    @Override
+    public boolean support(String param) {
+        return param.equalsIgnoreCase("jdbctemplate");
     }
 }

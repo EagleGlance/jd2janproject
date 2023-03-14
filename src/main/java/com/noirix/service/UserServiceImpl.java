@@ -40,11 +40,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User object) {
-        /*Validation layer*/
-        if (object.getWeight() > 80) {
-            throw new RuntimeException("Something wrong!");
-        }
-
         return userRepository.create(object);
     }
 

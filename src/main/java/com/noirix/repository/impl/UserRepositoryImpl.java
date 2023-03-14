@@ -6,6 +6,7 @@ import com.noirix.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -25,6 +26,7 @@ import static com.noirix.repository.columns.UserColumns.WEIGHT;
 
 @Repository
 @RequiredArgsConstructor
+@Order(0)
 public class UserRepositoryImpl implements UserRepository {
 
     private final DatabaseProperties properties;
@@ -40,7 +42,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         logger.info("Start of findAll method");
 
-        final String findAllQuery = "select * from users order by id desc";
+        final String findAllQuery = "select * from users order by id asc";
 
         List<User> result = new ArrayList<>();
 
@@ -127,5 +129,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> searchUser(String query, Double weight) {
         return null;
+    }
+
+    @Override
+    public boolean support(String param) {
+        return param.equalsIgnoreCase("jdbc");
     }
 }
