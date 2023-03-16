@@ -2,27 +2,25 @@ package com.noirix.service;
 
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import javax.inject.Named;
 import java.util.List;
+import java.util.Map;
 
 @Service
-//id = userServiceImpl
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-//    @Qualifier("userSecondRepositoryImpl")
+    private final UserRepository userRepository;
 
-//    @Inject //JSR-330
-//    @Named("userRepositoryImpl")
-//    @Named("userRepositoryImpl")
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    private UserRepository userRepository;
 
     @Override
-    public User findOne(Long id) {
-        return null;
+    public User findById(Long id) {
+        /*Validation layer*/
+        return userRepository.findById(id);
     }
 
     @Override
@@ -30,24 +28,34 @@ public class UserServiceImpl implements UserService {
         /*Validation layer*/
         return userRepository.findAll();
     }
-
     @Override
     public User create(User object) {
         /*Validation layer*/
-        if (object.getWeight() > 80) {
-            throw new RuntimeException("Something wrong!");
+        if (object.getPassword().length() < 8) {
+            throw new RuntimeException("The password is too short!");
         }
-
         return userRepository.create(object);
     }
 
     @Override
-    public User update(User object) {
-        return null;
+    public User update(Long id, User object) {
+        /*Validation layer*/
+        return userRepository.update(id, object);
     }
 
     @Override
     public void delete(Long id) {
+        /*Validation layer*/
+        userRepository.delete(id);
+    }
 
+    @Override
+    public List<User> changedOverTime(int number_of_days) {
+        return userRepository.changedOverTime(number_of_days);
+    }
+
+    @Override
+    public Map<String, String> emailAndPhoneNumber() {
+        return userRepository.emailAndPhoneNumber();
     }
 }

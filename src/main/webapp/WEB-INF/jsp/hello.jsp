@@ -20,23 +20,23 @@ ${userName}
 <div>
     <table>
         <tr>
-            <td>User Id</td>
-            <td>User Name</td>
-            <td>User Surname</td>
-            <td>Birth date</td>
-            <td>Full Name</td>
-            <td>Weight</td>
+            <td> Id </td>
+            <td> Login </td>
+            <td> Password </td>
+            <td> Email </td>
+            <td> Phone number</td>
+            <td> Passport series and number</td>
             <td>Edit</td>
             <td>Delete</td>
         </tr>
         <c:forEach var="user" items="${users}">
             <tr>
                 <td>${user.id}</td>
-                <td>${user.name}</td>
-                <td>${user.surname}</td>
-                <td>${user.birthDate}</td>
-                <td>${user.fullName}</td>
-                <td>${user.weight}</td>
+                <td>${user.login}</td>
+                <td>${user.password}</td>
+                <td>${user.phone_number}</td>
+                <td>${user.email}</td>
+                <td>${user.passport_series_and_number}</td>
                 <td><button>Edit</button></td>
                 <td><button>Delete</button></td>
             </tr>

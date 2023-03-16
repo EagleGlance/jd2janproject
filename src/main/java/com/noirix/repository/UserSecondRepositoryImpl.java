@@ -1,17 +1,15 @@
 package com.noirix.repository;
 
 import com.noirix.domain.User;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
-@Primary
 public class UserSecondRepositoryImpl implements UserRepository {
-
     @Override
-    public User findOne(Long id) {
+    public User findById(Long id) {
         return null;
     }
 
@@ -26,7 +24,7 @@ public class UserSecondRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User update(User object) {
+    public User update(Long id, User object) {
         return null;
     }
 
@@ -36,7 +34,12 @@ public class UserSecondRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void searchUser() {
+    public List<User> changedOverTime(int number_of_days) {
+        return null;
+    }
 
+    @Override
+    public Map<String, String> emailAndPhoneNumber() {
+        return null;
     }
 }
