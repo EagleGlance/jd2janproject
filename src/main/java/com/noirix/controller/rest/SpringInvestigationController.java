@@ -1,4 +1,4 @@
-package com.noirix.controller.mvc;
+package com.noirix.controller.rest;
 
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;

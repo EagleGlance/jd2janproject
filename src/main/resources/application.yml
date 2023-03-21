@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    hikari:
+      jdbc-url: "jdbc:postgresql://localhost:5432/apptest?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+      maximum-pool-size: 20
+      driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root
+    url: "jdbc:postgresql://localhost:5432/apptest?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+    driver-class-name: org.postgresql.Driver
+
+---
+
+amazon:
+  images:
+    s3: 123123213
+    token: someToken
+    password: password

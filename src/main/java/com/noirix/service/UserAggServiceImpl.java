@@ -1,17 +1,19 @@
 package com.noirix.service;
 
-import com.noirix.configuration.DatabaseProperties;
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
-import com.noirix.repository.impl.UserRepositoryImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
+@RequiredArgsConstructor
 public class UserAggServiceImpl implements UserAggregationService {
 
-    private final UserRepository userRepository = new UserRepositoryImpl(new DatabaseProperties());
+    private final UserRepository userRepository;
 
     @Override
     public Map<String, Object> getStats() {

@@ -1,4 +1,4 @@
-package com.noirix.controller.mvc;
+package com.noirix.controller.rest;
 
 import com.noirix.controller.requests.UserCreateRequest;
 import com.noirix.domain.User;
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rest/users")
 @RequiredArgsConstructor
@@ -21,10 +23,10 @@ public class UserRestController {
 
     @GetMapping
     public ResponseEntity<Object> getAllUsers() {
-//        List<User> users = userService.findAll();
-//        return new ResponseEntity<>(users, HttpStatus.OK);
+        List<User> users = userService.findAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
 
-        throw new RuntimeException("Huston, we have a problem here!");
+//        throw new RuntimeException("Huston, we have a problem here!");
     }
 
     @PostMapping
