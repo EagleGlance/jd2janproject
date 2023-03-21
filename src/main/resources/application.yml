@@ -16,3 +16,10 @@ amazon:
     s3: 123123213
     token: someToken
     password: password
+
+---
+
+google:
+  servers:
+    port: 8080
+    name: some-server
