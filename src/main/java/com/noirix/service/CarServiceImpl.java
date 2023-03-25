@@ -40,6 +40,6 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> searchCar(String query, Float price) {
-        return null;
+        return carRepository.searchCar(query.toLowerCase(), price);
     }
 }

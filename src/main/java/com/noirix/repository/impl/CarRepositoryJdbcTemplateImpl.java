@@ -49,6 +49,13 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
 
     @Override
     public List<Car> searchCar(String query, Float price) {
-        return null;
+        final String sqlQuery =
+                "select * " +
+                        " from cars " +
+                        " where lower(name) like '%" + query + "%' and " +
+                        " price > " + price +
+                        " order by id desc";
+
+        return jdbcTemplate.query(sqlQuery, carRowMapper);
     }
 }
