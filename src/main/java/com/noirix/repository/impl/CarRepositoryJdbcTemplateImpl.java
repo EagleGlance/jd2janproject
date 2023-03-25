@@ -3,7 +3,6 @@ package com.noirix.repository.impl;
 import com.noirix.domain.Car;
 import com.noirix.repository.CarRepository;
 import com.noirix.repository.rowmapper.CarRowMapper;
-import com.noirix.repository.rowmapper.UserRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
