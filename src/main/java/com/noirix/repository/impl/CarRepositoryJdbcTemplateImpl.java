@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -32,6 +31,11 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
     @Override
     public List<Car> findAll() {
         return jdbcTemplate.query("select * from cars order by id desc", carRowMapper);
+    }
+    public List<Car> findAll(int page, int offset) {
+        int totalOffset = (page - 1) * offset;
+        return jdbcTemplate.query("select * from cars order by price desc limit " + totalOffset +
+                " offset " + offset, carRowMapper);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.noirix.controller.mvc;
 
 import com.noirix.controller.requests.CarCreateRequest;
 import com.noirix.controller.requests.CarSearchCriteria;
+import com.noirix.controller.requests.PageCriteria;
 import com.noirix.domain.Car;
 import com.noirix.service.CarService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,12 @@ public class CarRestController {
     @GetMapping
     public ResponseEntity<Object> getAllCars() {
         List<Car> cars = carService.findAll();
+        return new ResponseEntity<>(cars, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/page")
+    public ResponseEntity<Object> getAllCarsByPriceInPages(@ModelAttribute PageCriteria criteria) {
+        List<Car> cars = carService.findAll(criteria.getPage(), criteria.getOffset());
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 

@@ -23,6 +23,10 @@ public class CarServiceImpl implements CarService {
         return carRepository.findAll();
     }
 
+    public List<Car> findAll(int page, int offset) {
+        return carRepository.findAll(page, offset);
+    }
+
     @Override
     public Car create(Car object) {
         return carRepository.create(object);

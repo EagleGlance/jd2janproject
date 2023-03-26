@@ -9,6 +9,8 @@ public interface CarService {
 
     List<Car> findAll();
 
+    List<Car> findAll(int page, int offset);
+
     Car create(Car object);
 
     Car update(Car object);
