@@ -48,7 +48,7 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
         Long carUserId = car.getUser_id();
         Timestamp carCreated = car.getCreated();
         Timestamp carChanged = car.getChanged();
-        String insertNewCarQuery = "INSERT INTO CARS (name, brand, price, user_id, created, changed) VALUES " +
+        final String insertNewCarQuery = "INSERT INTO CARS (name, brand, price, user_id, created, changed) VALUES " +
                 "('" + carName + "','" + carBrand + "','" + carPrice + "','" + carUserId + "','" + carCreated + "','"
                 + carChanged + "')";
         jdbcTemplate.execute(insertNewCarQuery);
@@ -60,8 +60,19 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
     }
 
     @Override
-    public Car update(Car object) {
-        return null;
+    public Car update(Car car) {
+        Long carId = car.getId();
+        String carName = car.getName();
+        String carBrand = car.getBrand();
+        Float carPrice = car.getPrice();
+        Long carUserId = car.getUser_id();
+        Timestamp carCreated = car.getCreated();
+        Timestamp carChanged = car.getChanged();
+        final String sqlString = "UPDATE cars SET name = '" + carName + "', brand = '" + carBrand + "', price = '" +
+                carPrice + "', user_id = '" + carUserId + "', created = '" + carCreated + "', changed = '" +
+                carChanged + "' WHERE id = " + carId;
+        jdbcTemplate.update(sqlString);
+        return findOne(carId);
     }
 
     @Override
