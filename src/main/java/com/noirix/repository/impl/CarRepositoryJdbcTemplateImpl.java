@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -34,7 +36,27 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
 
     @Override
     public Car create(Car object) {
-        return null;
+        addNewCar(object);
+        Long id = getIdOfLastAddedCar();
+        return findOne(id);
+    }
+
+    public void addNewCar(Car car) {
+        String carName = car.getName();
+        String carBrand = car.getBrand();
+        Float carPrice = car.getPrice();
+        Long carUserId = car.getUser_id();
+        Timestamp carCreated = car.getCreated();
+        Timestamp carChanged = car.getChanged();
+        String insertNewCarQuery = "INSERT INTO CARS (name, brand, price, user_id, created, changed) VALUES " +
+                "('" + carName + "','" + carBrand + "','" + carPrice + "','" + carUserId + "','" + carCreated + "','"
+                + carChanged + "')";
+        jdbcTemplate.execute(insertNewCarQuery);
+    }
+
+    public Long getIdOfLastAddedCar() {
+        final String findIdIdOfLastAddedCar = "select MAX(id) from cars";
+        return jdbcTemplate.queryForObject(findIdIdOfLastAddedCar, Long.class);
     }
 
     @Override
@@ -44,7 +66,8 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
 
     @Override
     public void delete(Long id) {
-
+        final String sqlQuery = "DELETE from cars where id = " + id ;
+        jdbcTemplate.update(sqlQuery);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class CarCreateRequest {
 
-    private Long id;
+    //private Long id;
     private String name;
     private String brand;
     private Float price;

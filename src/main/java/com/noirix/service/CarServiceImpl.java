@@ -25,7 +25,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car create(Car object) {
-        return null;
+        return carRepository.create(object);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void delete(Long id) {
-
+        carRepository.delete(id);
     }
 
     @Override
