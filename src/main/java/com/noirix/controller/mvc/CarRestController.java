@@ -45,27 +45,15 @@ public class CarRestController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findOneById(@PathVariable String id) {
-        Long parsedCarId;
-        try {
-            parsedCarId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            log.error("Car id: " + id + " cannot be parsed to Long", e);
-            parsedCarId = 1L;
-        }
+        Long parsedCarId = Long.parseLong(id);
         Car car = carService.findOne(parsedCarId);
         return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
-    //deleting in get methode just for example not for use
+    //deleting in this get methode is just for example but not for use
     @GetMapping(value = "delete/{id}")
     public ResponseEntity<Object> doSomethingWithOneById(@PathVariable String id) {
-        Long parsedCarId;
-        try {
-            parsedCarId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            log.error("Car id: " + id + " cannot be parsed to Long", e);
-            parsedCarId = 1L;
-        }
+        Long parsedCarId = Long.parseLong(id);
         Car car = carService.findOne(parsedCarId);
         carService.delete(parsedCarId);
         car.setIs_deleted(true);
@@ -74,13 +62,7 @@ public class CarRestController {
 
     @GetMapping(value = "/search")
     public ResponseEntity<Object> searchCarByParam(@ModelAttribute CarSearchCriteria criteria) {
-        Float parsedPrice;
-        try {
-            parsedPrice = Float.parseFloat(criteria.getPrice());
-        } catch (NumberFormatException e) {
-            log.error("Car param price: " + criteria.getPrice() + " cannot be parsed to Float", e);
-            parsedPrice = 100_000f;
-        }
+        Float parsedPrice = Float.parseFloat(criteria.getPrice());
         List<Car> searchList = carService.searchCar(criteria.getQuery(), parsedPrice);
         return new ResponseEntity<>(searchList, HttpStatus.OK);
     }
@@ -101,13 +83,7 @@ public class CarRestController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> deleteOneById(@PathVariable String id) {
-        Long parsedCarId;
-        try {
-            parsedCarId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            log.error("Car id: " + id + " cannot be parsed to Long", e);
-            parsedCarId = 1L;
-        }
+        Long parsedCarId = Long.parseLong(id);
         Car car = carService.findOne(parsedCarId);
         carService.delete(parsedCarId);
         car.setIs_deleted(true);
@@ -117,13 +93,7 @@ public class CarRestController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<Object> updateCar(@PathVariable String id,
                                          @RequestBody CarCreateRequest request) {
-        Long parsedCarId;
-        try {
-            parsedCarId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            log.error("Car id: " + id + " cannot be parsed to Long", e);
-            parsedCarId = 1L;
-        }
+        Long parsedCarId = Long.parseLong(id);
         Car build = Car.builder()
                 .id(parsedCarId)
                 .name(request.getName())
@@ -140,13 +110,7 @@ public class CarRestController {
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Object> updatePartlyCar(@PathVariable String id,
                                             @RequestBody CarCreateRequest request) {
-        Long parsedCarId;
-        try {
-            parsedCarId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            log.error("Car id: " + id + " cannot be parsed to Long", e);
-            parsedCarId = 1L;
-        }
+        Long parsedCarId = Long.parseLong(id);
         Car build = carService.findOne(parsedCarId);
         if (request.getName() != null) build.setName(request.getName());
         if (request.getBrand() != null) build.setBrand(request.getBrand());

@@ -26,15 +26,29 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
     private final CarRowMapper carRowMapper;
     @Override
     public Car findOne(Long id) {
-        //return jdbcTemplate.queryForObject("select * from cars where id = " + id, carRowMapper);
         String sqlQuery = "select * from cars where id = :carId";
         return namedParameterJdbcTemplate.queryForObject(sqlQuery, new MapSqlParameterSource("carId", id), carRowMapper);
+    }
+
+    @Override
+    public void delete(Long id) {
+        final String sqlQuery = "DELETE from cars where id = :carId";
+        namedParameterJdbcTemplate.update(sqlQuery, new MapSqlParameterSource("carId", id));
+    }
+
+    @Override
+    public List<Car> searchCar(String query, Float price) {
+        final String sqlQuery =
+                "select * from cars where lower(name) like :query and price > :carPrice order by id desc";
+        return namedParameterJdbcTemplate.query(sqlQuery, new MapSqlParameterSource("query",
+                '%' + query + '%').addValue("carPrice", price), carRowMapper);
     }
 
     @Override
     public List<Car> findAll() {
         return jdbcTemplate.query("select * from cars order by id desc", carRowMapper);
     }
+
     public List<Car> findAll(int page, int offset) {
         int totalOffset = (page - 1) * offset;
         return jdbcTemplate.query("select * from cars order by price desc limit " + totalOffset +
@@ -80,23 +94,5 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
                 carChanged + "' WHERE id = " + carId;
         jdbcTemplate.update(sqlString);
         return findOne(carId);
-    }
-
-    @Override
-    public void delete(Long id) {
-        final String sqlQuery = "DELETE from cars where id = " + id ;
-        jdbcTemplate.update(sqlQuery);
-    }
-
-    @Override
-    public List<Car> searchCar(String query, Float price) {
-        final String sqlQuery =
-                "select * " +
-                        " from cars " +
-                        " where lower(name) like '%" + query + "%' and " +
-                        " price > " + price +
-                        " order by id desc";
-
-        return jdbcTemplate.query(sqlQuery, carRowMapper);
     }
 }

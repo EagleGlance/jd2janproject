@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import static com.noirix.controller.response.ApplicationErrorCodes.FATAL_ERROR;
+import static com.noirix.controller.response.ApplicationErrorCodes.PARAMETER_NOT_PARSED;
 import static com.noirix.controller.response.ApplicationErrorCodes.USER_NOT_FOUND;
 
 @ControllerAdvice
@@ -17,11 +18,23 @@ public class DefaultExceptionHandler {
     private static final Logger log = Logger.getLogger(DefaultExceptionHandler.class);
 
     private final RandomValuesGenerator generator;
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-//        log.error(e.getMessage(), e);
-//        return new ResponseEntity<>(new ErrorMessage(1L, e.getLocalizedMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
-//    }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<ErrorMessage> handleNumberFormatException(NumberFormatException e) {
+        /* Handles all NumberFormat exceptions. Status code 400. */
+
+        String exceptionUniqueId = generator.uuidGenerator();
+
+        log.error(exceptionUniqueId + e.getMessage(), e);
+
+        return new ResponseEntity<>(
+                new ErrorMessage(
+                        exceptionUniqueId,
+                        PARAMETER_NOT_PARSED.getCodeId(),
+                        e.getMessage()
+                ),
+                HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> handleOthersException(Exception e) {
@@ -42,7 +55,7 @@ public class DefaultExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorMessage> handleRuntimeException(RuntimeException e) {
-        /* Handles all other exceptions. Status code 500. */
+        /* Handles all Runtime exceptions. Status code 500. */
 
         String exceptionUniqueId = generator.uuidGenerator();
 
