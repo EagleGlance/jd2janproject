@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Setter
 @Getter

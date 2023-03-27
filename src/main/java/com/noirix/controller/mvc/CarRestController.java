@@ -37,7 +37,7 @@ public class CarRestController {
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/page")
+    @GetMapping(value = "/paging")
     public ResponseEntity<Object> getAllCarsByPriceInPages(@ModelAttribute PageCriteria criteria) {
         List<Car> cars = carService.findAll(criteria.getPage(), criteria.getOffset());
         return new ResponseEntity<>(cars, HttpStatus.OK);
@@ -56,6 +56,7 @@ public class CarRestController {
         return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
+    //deleting in get methode just for example not for use
     @GetMapping(value = "delete/{id}")
     public ResponseEntity<Object> doSomethingWithOneById(@PathVariable String id) {
         Long parsedCarId;
@@ -133,7 +134,7 @@ public class CarRestController {
                 .changed(request.getChanged())
                 .build();
         Car updatedCar = carService.update(build);
-        return new ResponseEntity<>(updatedCar, HttpStatus.CREATED);
+        return new ResponseEntity<>(updatedCar, HttpStatus.OK);
     }
 
     @PatchMapping(value = "/{id}")
@@ -154,6 +155,6 @@ public class CarRestController {
         if (request.getCreated() != null) build.setCreated(request.getCreated());
         if (request.getChanged() != null) build.setChanged(request.getChanged());
         Car updatedCar = carService.update(build);
-        return new ResponseEntity<>(updatedCar, HttpStatus.CREATED);
+        return new ResponseEntity<>(updatedCar, HttpStatus.OK);
     }
 }

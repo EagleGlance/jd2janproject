@@ -6,6 +6,7 @@ import com.noirix.repository.rowmapper.CarRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +26,9 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
     private final CarRowMapper carRowMapper;
     @Override
     public Car findOne(Long id) {
-        return jdbcTemplate.queryForObject("select * from cars where id = " + id, carRowMapper);
+        //return jdbcTemplate.queryForObject("select * from cars where id = " + id, carRowMapper);
+        String sqlQuery = "select * from cars where id = :carId";
+        return namedParameterJdbcTemplate.queryForObject(sqlQuery, new MapSqlParameterSource("carId", id), carRowMapper);
     }
 
     @Override
