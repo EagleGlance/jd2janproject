@@ -5,13 +5,19 @@ import com.noirix.repository.CarRepository;
 import com.noirix.repository.rowmapper.CarRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.CallableStatementCreator;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Primary
@@ -24,6 +30,14 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private final CarRowMapper carRowMapper;
+
+    public Integer getNumberOfCarsByUserId(Long user_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("findAllCarsForUser");
+        SqlParameterSource in = new MapSqlParameterSource().addValue("in_user_id", user_id);
+        Integer carsNumber = jdbcCall.executeFunction(Integer.class, in);
+        return carsNumber;
+    }
+
     @Override
     public Car findOne(Long id) {
         String sqlQuery = "select * from cars where id = :carId";

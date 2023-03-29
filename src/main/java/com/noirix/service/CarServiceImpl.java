@@ -13,6 +13,11 @@ import java.util.List;
 public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
+
+    public Integer getNumberOfCarsByUserId(Long user_id) {
+        return carRepository.getNumberOfCarsByUserId(user_id);
+    }
+
     @Override
     public Car findOne(Long id) {
         return carRepository.findOne(id);

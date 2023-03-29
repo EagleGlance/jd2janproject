@@ -18,5 +18,7 @@ public interface CarService {
     void delete(Long id);
 
     List<Car> searchCar(String query, Float price);
+
+    Integer getNumberOfCarsByUserId(Long parsedUserId);
 }
 

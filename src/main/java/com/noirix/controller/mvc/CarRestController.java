@@ -50,7 +50,38 @@ public class CarRestController {
         return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
-    //deleting in this get methode is just for example but not for use
+    /**
+     * Method execute function in DB with such body:
+     * create or replace function findAllCarsForUser (in_user_id bigint)
+     * returns integer
+     * language plpgsql
+     * as
+     *     $$
+     *     declare carsNumber integer;
+     * BEGIN
+     *     select count(*) into carsNumber from cars
+     *         where user_id = in_user_id;
+     *     return carsNumber;
+     * end;
+     * $$
+     *
+     * @param user_id - is "id" of user we calculate the number of cars in DB for
+     * @return number of cars from DB the user with "id" owns
+     */
+
+    @GetMapping(value = "/calculate/{user_id}")
+    public ResponseEntity<Object> calculateNumberOfCarsByUserId(@PathVariable String user_id) {
+        Long parsedUserId = Long.parseLong(user_id);
+        Integer numberOfCars = carService.getNumberOfCarsByUserId(parsedUserId);
+        return new ResponseEntity<>(numberOfCars, HttpStatus.OK);
+    }
+
+    /**
+     * deleting of car in this GET methode is not safety and is just for example but not for use
+     * @param id - is "id" of being deleted car from cars table
+     * @return in success deleted car as json object with information from all columns from car table
+     * with parameter "is_deleted" set true
+     */
     @GetMapping(value = "delete/{id}")
     public ResponseEntity<Object> doSomethingWithOneById(@PathVariable String id) {
         Long parsedCarId = Long.parseLong(id);

@@ -7,5 +7,7 @@ public interface CarRepository extends CRUDRepository<Long, Car> {
     List<Car> searchCar(String query, Float price);
 
     List<Car> findAll(int page, int offset);
+
+    Integer getNumberOfCarsByUserId(Long userId);
 }
 
