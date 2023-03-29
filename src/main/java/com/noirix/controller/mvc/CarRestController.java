@@ -51,7 +51,7 @@ public class CarRestController {
     }
 
     /**
-     * Method execute function in DB with such body:
+     * Method execute function in DB with body:
      * create or replace function findAllCarsForUser (in_user_id bigint)
      * returns integer
      * language plpgsql
@@ -66,7 +66,7 @@ public class CarRestController {
      * $$
      *
      * @param user_id - is "id" of user we calculate the number of cars in DB for
-     * @return number of cars from DB the user with "id" owns
+     * @return number of cars from DB for the user with "id"
      */
 
     @GetMapping(value = "/calculate/{user_id}")
@@ -74,6 +74,30 @@ public class CarRestController {
         Long parsedUserId = Long.parseLong(user_id);
         Integer numberOfCars = carService.getNumberOfCarsByUserId(parsedUserId);
         return new ResponseEntity<>(numberOfCars, HttpStatus.OK);
+    }
+
+    /**
+     * Method execute procedure in DB with body:
+     * create or replace procedure carsChangeIsDeleted (IN in_user_id bigint)
+     *     language plpgsql
+     * as $$
+     * BEGIN
+     *     update cars
+     *     set is_deleted = true
+     *     where user_id = in_user_id;
+     *     commit;
+     * end;
+     * $$;
+     *
+     * @param user_id is "id" of user we change the status "is_deleted" of cars in DB  to true
+     * @return only status 200.OK
+     */
+
+    @PatchMapping(value = "/isDeleted/{user_id}")
+    public ResponseEntity<Object> changeCarsIsDeletedStatusByUserId(@PathVariable String user_id) {
+        Long parsedUserId = Long.parseLong(user_id);
+        carService.getNumberOfCarsByUserId(parsedUserId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**

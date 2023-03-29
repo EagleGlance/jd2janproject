@@ -9,5 +9,7 @@ public interface CarRepository extends CRUDRepository<Long, Car> {
     List<Car> findAll(int page, int offset);
 
     Integer getNumberOfCarsByUserId(Long userId);
+
+    void changeCarsIsDeletedStatusByUserId(Long user_id);
 }
 

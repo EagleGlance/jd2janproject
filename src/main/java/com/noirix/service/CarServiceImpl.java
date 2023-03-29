@@ -18,6 +18,10 @@ public class CarServiceImpl implements CarService {
         return carRepository.getNumberOfCarsByUserId(user_id);
     }
 
+    public void changeCarsIsDeletedStatusByUserId(Long user_id) {
+        carRepository.changeCarsIsDeletedStatusByUserId(user_id);
+    }
+
     @Override
     public Car findOne(Long id) {
         return carRepository.findOne(id);

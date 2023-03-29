@@ -38,6 +38,12 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
         return carsNumber;
     }
 
+    public void changeCarsIsDeletedStatusByUserId(Long user_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("carsChangeIsDeleted");
+        SqlParameterSource in = new MapSqlParameterSource().addValue("in_user_id", user_id);
+        jdbcCall.execute(in);
+    }
+
     @Override
     public Car findOne(Long id) {
         String sqlQuery = "select * from cars where id = :carId";
