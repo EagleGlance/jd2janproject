@@ -1,21 +1,21 @@
-package com.noirix.service;
+package com.noirix.service.impl;
 
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
+import com.noirix.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import javax.inject.Named;
+
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
+@Primary
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
 
     @Override
     public User findById(Long id) {

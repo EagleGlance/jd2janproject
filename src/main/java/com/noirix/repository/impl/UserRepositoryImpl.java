@@ -1,8 +1,12 @@
-package com.noirix.repository;
+package com.noirix.repository.impl;
 
 import com.noirix.constans.Milliseconds;
 import com.noirix.domain.User;
+import com.noirix.configuration.DatabaseProperties;
+import com.noirix.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -18,27 +22,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+
+import static com.noirix.repository.columns.UserColumns.CHANGED;
+import static com.noirix.repository.columns.UserColumns.CREATED;
+import static com.noirix.repository.columns.UserColumns.EMAIL;
+import static com.noirix.repository.columns.UserColumns.ID;
+import static com.noirix.repository.columns.UserColumns.LOGIN;
+import static com.noirix.repository.columns.UserColumns.PASSPORT_SERIES_AND_NUMBER;
+import static com.noirix.repository.columns.UserColumns.PASSWORD;
+import static com.noirix.repository.columns.UserColumns.PHONE_NUMBER;
 
 @Repository
-@Primary
+//@Primary
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
-    public static final String POSTRGES_DRIVER_NAME = "org.postgresql.Driver";
-    public static final String DATABASE_URL = "jdbc:postgresql://localhost:";
-    public static final int DATABASE_PORT = 5432;
-    public static final String DATABASE_NAME = "/db1";
-    public static final String DATABASE_LOGIN = "postgres";
-    public static final String DATABASE_PASSWORD = "postgres";
-
-    private static final String ID = "id";
-    private static final String LOGIN = "login";
-    private static final String PASSWORD = "password";
-    private static final String PHONE_NUMBER = "phone_number";
-    private static final String EMAIL = "email";
-    private static final String PASSPORT_SERIES_AND_NUMBER = "passport_series_and_number";
-    private static final String CREATED = "created";
-    private static final String CHANGED = "changed";
+    private final DatabaseProperties properties;
+    private final Logger logger = Logger.getLogger(UserRepositoryImpl.class);
 
 
     private User parseResultSet(ResultSet rs) {
@@ -46,15 +46,16 @@ public class UserRepositoryImpl implements UserRepository {
         User user;
 
         try {
-            user = new User();
-            user.setId(rs.getLong(ID)); //1 or id
-            user.setLogin(rs.getString(LOGIN));
-            user.setPassword(rs.getString(PASSWORD));
-            user.setPhone_number(rs.getString(PHONE_NUMBER));
-            user.setEmail(rs.getString(EMAIL));
-            user.setPassport_series_and_number(rs.getString(PASSPORT_SERIES_AND_NUMBER));
-            user.setCreated(rs.getTimestamp(CREATED));
-            user.setChanged(rs.getTimestamp(CHANGED));
+            user = User.builder()
+                    .id(rs.getLong(ID))
+                    .login(rs.getString(LOGIN))
+                    .password(rs.getString(PASSWORD))
+                    .phone_number(rs.getString(PHONE_NUMBER))
+                    .email(rs.getString(EMAIL))
+                    .passport_series_and_number(rs.getString(PASSPORT_SERIES_AND_NUMBER))
+                    .created(rs.getTimestamp(CREATED))
+                    .changed(rs.getTimestamp(CHANGED))
+                    .build();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -64,7 +65,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private void registerDriver() {
         try {
-            Class.forName(POSTRGES_DRIVER_NAME);
+            Class.forName(properties.getDriverNAME());
         } catch (ClassNotFoundException e) {
             System.err.println("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
@@ -72,9 +73,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private Connection getConnection() {
-        String jdbcURL = StringUtils.join(DATABASE_URL, DATABASE_PORT, DATABASE_NAME);
+        String jdbcURL = StringUtils.join(properties.getUrl(), properties.getPort(), properties.getName());
         try {
-            return DriverManager.getConnection(jdbcURL, DATABASE_LOGIN, DATABASE_PASSWORD);
+            return DriverManager.getConnection(jdbcURL, properties.getLogin(), properties.getPassword());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -82,6 +83,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
+
+        logger.info("Start of findAll method");
 
         final String findAllQuery = "select * from users order by id desc";
 
@@ -95,8 +98,11 @@ public class UserRepositoryImpl implements UserRepository {
             while (rs.next()) {
                 result.add(parseResultSet(rs));
             }
+
+            logger.info("End of findAll method");
+
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage(), e);
             throw new RuntimeException("SQL Issues!");
         }
         return result;
@@ -146,6 +152,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return findById(user.getId());
     }
+
 
     @Override
     public User update(Long id, User user)
