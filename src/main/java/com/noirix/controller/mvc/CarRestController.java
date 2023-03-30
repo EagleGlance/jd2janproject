@@ -97,7 +97,7 @@ public class CarRestController {
     public ResponseEntity<Object> changeCarsIsDeletedStatusByUserId(@PathVariable String user_id) {
         Long parsedUserId = Long.parseLong(user_id);
         carService.changeCarsIsDeletedStatusByUserId(parsedUserId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
