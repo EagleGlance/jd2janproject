@@ -96,7 +96,7 @@ public class CarRestController {
     @PatchMapping(value = "/isDeleted/{user_id}")
     public ResponseEntity<Object> changeCarsIsDeletedStatusByUserId(@PathVariable String user_id) {
         Long parsedUserId = Long.parseLong(user_id);
-        carService.getNumberOfCarsByUserId(parsedUserId);
+        carService.changeCarsIsDeletedStatusByUserId(parsedUserId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
