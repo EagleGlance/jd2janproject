@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.core.simple.SimpleJdbcCallOperations;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -39,9 +40,7 @@ public class CarRepositoryJdbcTemplateImpl implements CarRepository {
     }
 
     public void changeCarsIsDeletedStatusByUserId(Long user_id) {
-        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("carsChangeIsDeleted");
-        SqlParameterSource in = new MapSqlParameterSource().addValue("in_user_id", user_id);
-        jdbcCall.execute(in);
+        jdbcTemplate.update("call carsChangeIsDeleted(?)", user_id);
     }
 
     @Override
