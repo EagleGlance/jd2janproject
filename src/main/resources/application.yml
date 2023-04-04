@@ -23,3 +23,9 @@ google:
   servers:
     port: 8080
     name: some-server
+
+---
+
+jwtconfig:
+  secret: secret
+  expiration: 60000

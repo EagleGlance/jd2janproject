@@ -13,23 +13,18 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Data
 @Builder
-public class User {
+public class Role {
 
     private Long id;
 
-    private String name;
+    private SystemRoles systemRole = SystemRoles.ROLE_USER;
 
-    private String surname;
+    private Long userId;
 
-    private Timestamp birthDate;
+    private Timestamp created;
 
-    private String fullName;
+    private Timestamp changed;
 
-    private Double weight;
-
-    private String email;
-
-    private String password;
 
     @Override
     public String toString() {

@@ -1,30 +1,20 @@
 package com.noirix.service;
 
+import com.noirix.domain.Role;
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
-import com.noirix.util.RandomValuesGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-//id = userServiceImpl
 public class UserServiceImpl implements UserService {
-
-//    @Autowired
-//    @Qualifier("userSecondRepositoryImpl")
-
-//    @Inject //JSR-330
-//    @Named("userRepositoryImpl")
-//    @Named("userRepositoryImpl")
 
     private final UserRepository userRepository;
 
-    private final RandomValuesGenerator randomValuesGenerator;
-
-    public UserServiceImpl(UserRepository userRepository, RandomValuesGenerator randomValuesGenerator) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.randomValuesGenerator = randomValuesGenerator;
     }
 
     @Override
@@ -34,7 +24,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        /*Validation layer*/
         return userRepository.findAll();
     }
 
@@ -56,5 +45,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> search(String query, Double weight) {
         return userRepository.searchUser(query.toLowerCase(), weight);
+    }
+
+    @Override
+    public List<Role> getUserAuthorities(Long userId) {
+        return userRepository.getUserAuthorities(userId);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

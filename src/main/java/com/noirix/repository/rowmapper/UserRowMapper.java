@@ -8,9 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static com.noirix.repository.columns.UserColumns.BIRTH_DATE;
+import static com.noirix.repository.columns.UserColumns.EMAIL;
 import static com.noirix.repository.columns.UserColumns.FULL_NAME;
 import static com.noirix.repository.columns.UserColumns.ID;
 import static com.noirix.repository.columns.UserColumns.NAME;
+import static com.noirix.repository.columns.UserColumns.PASSWORD;
 import static com.noirix.repository.columns.UserColumns.SURNAME;
 import static com.noirix.repository.columns.UserColumns.WEIGHT;
 
@@ -29,6 +31,8 @@ public class UserRowMapper implements RowMapper<User> {
                     .birthDate(rs.getTimestamp(BIRTH_DATE))
                     .fullName(rs.getString(FULL_NAME))
                     .weight(rs.getDouble(WEIGHT))
+                    .email(rs.getString(EMAIL))
+                    .password(rs.getString(PASSWORD))
                     .build();
 
         } catch (SQLException e) {

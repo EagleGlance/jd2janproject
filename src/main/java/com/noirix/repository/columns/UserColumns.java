@@ -7,4 +7,8 @@ public interface UserColumns {
     String BIRTH_DATE = "birth_date";
     String FULL_NAME = "full_name";
     String WEIGHT = "weight";
+
+    String EMAIL = "email";
+
+    String PASSWORD = "user_password";
 }

@@ -1,5 +1,6 @@
 package com.noirix.repository.impl;
 
+import com.noirix.domain.Role;
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import static com.noirix.repository.columns.UserColumns.BIRTH_DATE;
 import static com.noirix.repository.columns.UserColumns.FULL_NAME;
@@ -20,7 +22,7 @@ import static com.noirix.repository.columns.UserColumns.WEIGHT;
 
 @Repository
 @RequiredArgsConstructor
-@Order(0)
+@Order(10)
 public class UserRepositoryImpl implements UserRepository {
 
 //    private final DatabaseProperties properties;
@@ -129,5 +131,15 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean support(String param) {
         return param.equalsIgnoreCase("jdbc");
+    }
+
+    @Override
+    public List<Role> getUserAuthorities(Long userId) {
+        return null;
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return Optional.empty();
     }
 }
