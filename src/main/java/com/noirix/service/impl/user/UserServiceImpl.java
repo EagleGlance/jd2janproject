@@ -1,4 +1,4 @@
-package com.noirix.service.impl;
+package com.noirix.service.impl.user;
 
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;
@@ -6,7 +6,6 @@ import com.noirix.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
@@ -51,11 +50,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> changedOverTime(int number_of_days) {
+        /*Validation layer*/
         return userRepository.changedOverTime(number_of_days);
     }
 
     @Override
     public Map<String, String> emailAndPhoneNumber() {
+        /*Validation layer*/
         return userRepository.emailAndPhoneNumber();
     }
 }

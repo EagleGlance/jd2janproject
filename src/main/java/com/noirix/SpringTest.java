@@ -18,16 +18,14 @@ public class SpringTest {
         UserService userService = applicationContext.getBean("userServiceImpl", UserService.class);
         Counter counter = applicationContext.getBean("counter", Counter.class);
 
-        logger.info(userService.findAll());
-        logger.info(userService.findById(9L));
-        logger.info(userService.changedOverTime(1));
-        logger.info(userService.update(9L, new User(9L, "1t28w", "lt682avw",
-                "+375298832456", "asdf@email.com","KH103456t8277",
-                Timestamp.valueOf(LocalDateTime.now()))));
-        //logger.info(userService.create(new User(28L, "i1788170w", "e518i68a77w",
-        //        "+375298795670", "qwer@email.com","KH1340175589",
-        //        Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()))));
-        logger.info(userService.emailAndPhoneNumber());
+//        logger.info(userService.findAll());
+//        logger.info(userService.findById(9L));
+//        logger.info(userService.changedOverTime(1));
+//        logger.info(userService.update(61L, new User(9L, "1t28w", "lt682avw",
+//                "+375298832456", "asdf@email.com","KH103456t8277")));
+//        logger.info(userService.create(new User("ka", "qaacd123)", "2ueu1a90",
+//                "Muu0_erk@emaail","uu99ea904")));
+//        logger.info(userService.emailAndPhoneNumber());
         logger.info(
                 "\nfindAll method was called " + counter.getFindAll() + " times\n" +
                 "findById method was called " + counter.getFindById() + " times\n" +

@@ -1,9 +1,9 @@
 package com.noirix.controller;
 
 import com.noirix.domain.User;
-import com.noirix.repository.impl.UserRepositoryImpl;
+import com.noirix.repository.impl.user.UserRepositoryImpl;
 import com.noirix.service.UserService;
-import com.noirix.service.impl.UserServiceImpl;
+import com.noirix.service.impl.user.UserServiceImpl;
 import com.noirix.configuration.DatabaseProperties;
 
 import javax.servlet.RequestDispatcher;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FrontController extends HttpServlet {
-
 
     private final UserService userService = new UserServiceImpl(new UserRepositoryImpl(new DatabaseProperties()));
 

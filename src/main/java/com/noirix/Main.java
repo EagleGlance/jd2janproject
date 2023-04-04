@@ -26,8 +26,8 @@ public class Main {
         for (User user : all) {
             System.out.println(user);
         }
-        System.out.println(userService.update(9L, new User(9L, "1t28w", "lt682avw", "+36843t26724w6", "ahet68jwt","13456t8w277h", Timestamp.valueOf(LocalDateTime.now()))));
-        System.out.println(userService.create(new User(27L, "i178170w", "e51li68a77w", "+000i7", "i1h7765e80jwt","13401755e68777h", Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()))));
+        System.out.println(userService.update(9L, new User(9L, "1t28w", "lt682avw", "+36843t26724w6", "ahet68jwt","13456t8w277h")));
+        System.out.println(userService.create(new User(27L, "i178170w", "e51li68a77w", "+000i7", "i1h7765e80jwt","13401755e68777h")));
         Map<String, String> emailPhone = userRepository.emailAndPhoneNumber();
         if (!emailPhone.isEmpty()) {
             System.out.println(emailPhone);

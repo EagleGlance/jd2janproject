@@ -1,4 +1,4 @@
-package com.noirix.service.impl;
+package com.noirix.service.impl.user;
 
 import com.noirix.domain.User;
 import com.noirix.repository.UserRepository;

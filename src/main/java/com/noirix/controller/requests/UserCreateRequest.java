@@ -12,7 +12,7 @@ import lombok.Setter;
 public class UserCreateRequest {
     private String login;
     private String password;
-    private String phone_number;
+    private String phoneNumber;
     private String email;
-    private String passport_series_and_number;
+    private String passportSeriesAndNumber;
 }

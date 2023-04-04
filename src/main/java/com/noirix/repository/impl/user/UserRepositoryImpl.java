@@ -1,4 +1,4 @@
-package com.noirix.repository.impl;
+package com.noirix.repository.impl.user;
 
 import com.noirix.constans.Milliseconds;
 import com.noirix.domain.User;
@@ -7,7 +7,6 @@ import com.noirix.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -50,9 +49,9 @@ public class UserRepositoryImpl implements UserRepository {
                     .id(rs.getLong(ID))
                     .login(rs.getString(LOGIN))
                     .password(rs.getString(PASSWORD))
-                    .phone_number(rs.getString(PHONE_NUMBER))
+                    .phoneNumber(rs.getString(PHONE_NUMBER))
                     .email(rs.getString(EMAIL))
-                    .passport_series_and_number(rs.getString(PASSPORT_SERIES_AND_NUMBER))
+                    .passportSeriesAndNumber(rs.getString(PASSPORT_SERIES_AND_NUMBER))
                     .created(rs.getTimestamp(CREATED))
                     .changed(rs.getTimestamp(CHANGED))
                     .build();
@@ -131,18 +130,17 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User create(User user) {
-        final String createQuery = "insert into users (id, login, password, phone_number, email, passport_series_and_number, created, changed)"
-                + "values(?, ?, ?, ?, ?, ?, ?, ?)";
+        final String createQuery = "insert into users (id, login, password, phone_number, email, passport_series_and_number,created, changed) values(?, ?, ?, ?, ?, ?, ?, ?)";
         registerDriver();
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(createQuery)) {
             preparedStatement.setLong(1, user.getId());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setString(4, user.getPhone_number());
+            preparedStatement.setString(4, user.getPhoneNumber());
             preparedStatement.setString(5, user.getEmail());
-            preparedStatement.setString(6, user.getPassport_series_and_number());
-            preparedStatement.setTimestamp(7, user.getCreated());
+            preparedStatement.setString(6, user.getPassportSeriesAndNumber());
+            preparedStatement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
             preparedStatement.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
             preparedStatement.executeUpdate();
         }
@@ -164,9 +162,9 @@ public class UserRepositoryImpl implements UserRepository {
              PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getPhone_number());
+            preparedStatement.setString(3, user.getPhoneNumber());
             preparedStatement.setString(4, user.getEmail());
-            preparedStatement.setString(5, user.getPassport_series_and_number());
+            preparedStatement.setString(5, user.getPassportSeriesAndNumber());
             preparedStatement.setTimestamp(6, user.getChanged());
             preparedStatement.setLong(7, id);
             preparedStatement.executeUpdate();
@@ -218,7 +216,7 @@ public class UserRepositoryImpl implements UserRepository {
         for (User user:users)
         {
             String email = user.getEmail();
-            String phone = user.getPhone_number();
+            String phone = user.getPhoneNumber();
             emailAndPhone.put(email, phone);
         }
         return emailAndPhone;

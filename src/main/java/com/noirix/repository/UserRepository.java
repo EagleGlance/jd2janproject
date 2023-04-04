@@ -6,6 +6,6 @@ import java.util.Map;
 
 public interface UserRepository extends CRUDRepository <Long, User> {
 
-    List<User> changedOverTime(int number_of_days);
+    List<User> changedOverTime(int numberOfDays);
     Map<String, String> emailAndPhoneNumber();
 }

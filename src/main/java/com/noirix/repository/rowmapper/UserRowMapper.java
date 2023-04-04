@@ -3,7 +3,6 @@ package com.noirix.repository.rowmapper;
 import com.noirix.domain.User;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -28,16 +27,15 @@ public class UserRowMapper implements RowMapper<User> {
                     .id(rs.getLong(ID))
                     .login(rs.getString(LOGIN))
                     .password(rs.getString(PASSWORD))
-                    .phone_number(rs.getString(PHONE_NUMBER))
+                    .phoneNumber(rs.getString(PHONE_NUMBER))
                     .email(rs.getString(EMAIL))
-                    .passport_series_and_number(rs.getString(PASSPORT_SERIES_AND_NUMBER))
+                    .passportSeriesAndNumber(rs.getString(PASSPORT_SERIES_AND_NUMBER))
                     .created(rs.getTimestamp(CREATED))
                     .changed(rs.getTimestamp(CHANGED))
                     .build();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return user;
     }
 }

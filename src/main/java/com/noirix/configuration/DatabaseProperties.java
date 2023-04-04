@@ -31,10 +31,8 @@ public class DatabaseProperties {
     private String login;
     @Value("${DATABASE_PASSWORD}")
     private String password;
-
     @Value("${JDBC_URL}")
     private String jdbcUrl;
-
     @Value("${POOL_SIZE}")
     private Integer poolSize;
 }
