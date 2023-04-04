@@ -1,4 +1,4 @@
-package com.noirix.security;
+package com.noirix.security.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

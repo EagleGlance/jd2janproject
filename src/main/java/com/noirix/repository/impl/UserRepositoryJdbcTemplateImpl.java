@@ -87,7 +87,7 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
     @Override
     public Optional<User> findByEmail(String email) {
 
-        User user = jdbcTemplate.queryForObject("select * from users where email = " + email, userRowMapper);
+        User user = jdbcTemplate.queryForObject("select * from users where email = '" + email + "'", userRowMapper);
 
         return Optional.of(user);
     }

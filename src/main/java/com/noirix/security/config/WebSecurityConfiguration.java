@@ -1,4 +1,4 @@
-package com.noirix.security;
+package com.noirix.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +70,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/guest/**").permitAll()
                 .antMatchers("/registration/**").permitAll()
-                .antMatchers("/authentication/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 //.antMatchers("/rest/**").hasAnyRole("ADMIN", "USER", "MODERATOR")
                 .antMatchers("/rest/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
