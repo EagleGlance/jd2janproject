@@ -1,4 +1,6 @@
 spring:
+  main:
+    allow-circular-references: true
   datasource:
     hikari:
       jdbc-url: "jdbc:postgresql://localhost:5432/apptest?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
@@ -8,6 +10,17 @@ spring:
     password: root
     url: "jdbc:postgresql://localhost:5432/apptest?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
     driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-description: Flyway Scripts
+#    locations: classpath:/db
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    url: ${spring.datasource.url}
+    default-schema: public
+    out-of-order: true
+    ignore-migration-patterns: '*:ignored'
 
 ---
 
