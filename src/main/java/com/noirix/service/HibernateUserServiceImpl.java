@@ -17,7 +17,7 @@ public class HibernateUserServiceImpl implements HibernateUserService {
 
     @Override
     public HibernateUser findOne(Long id) {
-        return null;
+        return userRepository.findOne(id);
     }
 
     @Override
@@ -27,12 +27,12 @@ public class HibernateUserServiceImpl implements HibernateUserService {
 
     @Override
     public HibernateUser create(HibernateUser object) {
-        return null;
+        return userRepository.create(object);
     }
 
     @Override
     public HibernateUser update(HibernateUser object) {
-        return null;
+        return userRepository.update(object);
     }
 
     @Override
