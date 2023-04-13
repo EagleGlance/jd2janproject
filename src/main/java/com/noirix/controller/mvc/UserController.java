@@ -2,6 +2,7 @@ package com.noirix.controller.mvc;
 
 import com.noirix.controller.requests.SearchCriteria;
 import com.noirix.domain.User;
+import com.noirix.service.UserAggregationService;
 import com.noirix.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -23,20 +25,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/users")
 public class UserController {
 
-//    GET + /users = findAllUsers
-//    GET + /users/1 = findUserById
-//    POST + /users = createUser
-
-    private static final Logger log = Logger.getLogger(UserController.class);
-
     private final UserService userService;
+    private static final Logger log = Logger.getLogger(UserController.class);
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView findAllUsers() {
 
         List<User> users = userService.findAll();
 
-        String collect = users.stream().map(User::getName).collect(Collectors.joining(","));
+        String collect = users.stream().map(User::getLogin).collect
+                (Collectors.joining(","));
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userName", collect);
@@ -47,23 +45,22 @@ public class UserController {
         return modelAndView;
     }
 
-    //localhost:8080/users/1
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ModelAndView findUserById(@PathVariable String id) {
+    public ModelAndView findUsersById(@PathVariable String id) {
 
         Long parsedUserId;
 
         try {
             parsedUserId = Long.parseLong(id);
         } catch (NumberFormatException e) {
-            log.error("User id: " + id + " cannot be parsed to Long", e);
+            log.error("User id: " + id + " cannot be parsed Long", e);
             parsedUserId = 1L;
         }
 
-        User user = userService.findOne(parsedUserId);
+        User user = userService.findById(parsedUserId);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userName", user.getFullName());
+        modelAndView.addObject("userName", user.getLogin());
         modelAndView.addObject("users", Collections.singletonList(user));
 
         modelAndView.setViewName("hello");
@@ -71,34 +68,31 @@ public class UserController {
         return modelAndView;
     }
 
-    //localhost:8080/users/search?query=some&weight=80
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-/*    public ModelAndView searchUserByParam(@RequestParam("query") String query,
-                                          @RequestParam("weight") String weight) {*/
 
-    public ModelAndView searchUserByParam(@Valid @ModelAttribute SearchCriteria criteria, BindingResult result) {
+//      public ModelAndView SearchUserByParam(@RequestParam String day)
+        public ModelAndView SearchUserByParam(@Valid @ModelAttribute SearchCriteria criteria, BindingResult result) {
 
-        System.out.println(result);
-
-        Double parsedWeight;
+        int parseNumberOfDay;
 
         try {
-            parsedWeight = Double.parseDouble(criteria.getWeight());
+            parseNumberOfDay = Integer.parseInt(criteria.getDay());
         } catch (NumberFormatException e) {
-            log.error("User param weight: " + criteria.getWeight() + " cannot be parsed to Double", e);
-            parsedWeight = 50D;
+            log.error("Number of day: " + criteria.getDay() + " cannot be parsed to int ", e);
+            parseNumberOfDay = 1;
         }
 
-        List<User> searchList = userService.search(criteria.getQuery(), parsedWeight);
+        List<User> searchList = userService.changedOverTime(parseNumberOfDay);
+
+        String collect = searchList.stream().map(User::getLogin).collect
+                (Collectors.joining(","));
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userName", "Search Result");
+        modelAndView.addObject("userName", collect);
         modelAndView.addObject("users", searchList);
 
         modelAndView.setViewName("hello");
 
         return modelAndView;
     }
-
-
 }

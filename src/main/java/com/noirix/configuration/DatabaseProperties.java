@@ -12,35 +12,27 @@ import org.springframework.stereotype.Component;
 
 @Component
 @PropertySource("classpath:database.properties")
-@Setter
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class DatabaseProperties {
-
     @Value("${POSTRGES_DRIVER_NAME}")
-    private String driverName;
-
+    private String driverNAME;
     @Value("${DATABASE_URL}")
     private String url;
-
     @Value("${DATABASE_PORT}")
     private String port;
-
     @Value("${DATABASE_NAME}")
     private String name;
-
     @Value("${DATABASE_LOGIN}")
     private String login;
-
     @Value("${DATABASE_PASSWORD}")
     private String password;
-
     @Value("${JDBC_URL}")
     private String jdbcUrl;
-
     @Value("${POOL_SIZE}")
     private Integer poolSize;
 }

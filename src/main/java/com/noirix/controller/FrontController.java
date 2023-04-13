@@ -1,11 +1,10 @@
 package com.noirix.controller;
 
-import com.noirix.configuration.DatabaseProperties;
 import com.noirix.domain.User;
-import com.noirix.repository.impl.UserRepositoryImpl;
+import com.noirix.repository.impl.user.UserRepositoryImpl;
 import com.noirix.service.UserService;
-import com.noirix.service.UserServiceImpl;
-import com.noirix.util.RandomValuesGenerator;
+import com.noirix.service.impl.user.UserServiceImpl;
+import com.noirix.configuration.DatabaseProperties;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,10 +17,7 @@ import java.util.stream.Collectors;
 
 public class FrontController extends HttpServlet {
 
-//    public FrontController() {
-//        super();
-//    }
-    private final UserService userService = new UserServiceImpl(new UserRepositoryImpl(new DatabaseProperties()), new RandomValuesGenerator());
+    private final UserService userService = new UserServiceImpl(new UserRepositoryImpl(new DatabaseProperties()));
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,11 +37,10 @@ public class FrontController extends HttpServlet {
 
             List<User> users = userService.findAll();
 
-            String collect = users.stream().map(User::getName).collect(Collectors.joining(","));
+            String collect = users.stream().map(User::getLogin).collect(Collectors.joining(","));
 
             req.setAttribute("userName", collect);
             req.setAttribute("users", users);
-
             dispatcher.forward(req, resp);
         }
     }
