@@ -3,6 +3,7 @@ package com.noirix.controller.rest;
 import com.noirix.controller.requests.UserCreateRequest;
 import com.noirix.controller.requests.UserUpdateRequest;
 import com.noirix.domain.Gender;
+import com.noirix.domain.hibernate.AuthenticationInfo;
 import com.noirix.domain.hibernate.HibernateUser;
 import com.noirix.service.HibernateUserService;
 import com.noirix.util.UserFieldsGenerator;
@@ -47,10 +48,13 @@ public class HibernateUserController {
                 .weight(request.getWeight())
                 .gender(Gender.NOT_SELECTED)
                 .fullName(request.getFullName())
-                .password(emailGenerator.generatePassword())
                 .build();
 
-        hibernateUser.setEmail(emailGenerator.generateEmail(hibernateUser));
+        String generateEmail = emailGenerator.generateEmail(hibernateUser);
+        String generatePassword = emailGenerator.generatePassword();
+        AuthenticationInfo info = new AuthenticationInfo(generateEmail, generatePassword);
+
+        hibernateUser.setAuthenticationInfo(info);
 
         hibernateUser = userService.create(hibernateUser);
         return new ResponseEntity<>(hibernateUser, HttpStatus.CREATED);

@@ -1,6 +1,5 @@
 package com.noirix.domain.hibernate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.noirix.domain.Gender;
@@ -12,8 +11,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -48,7 +50,6 @@ public class HibernateUser {
     @Id
     @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1, initialValue = 100)
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
@@ -66,12 +67,12 @@ public class HibernateUser {
     @Column
     private Double weight;
 
-    @Column
-    private String email;
-
-    @Column(name = "user_password")
-    @JsonIgnore
-    private String password;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "email", column = @Column(name = "email")),
+            @AttributeOverride(name = "password", column = @Column(name = "user_password"))
+    })
+    private AuthenticationInfo authenticationInfo;
 
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
