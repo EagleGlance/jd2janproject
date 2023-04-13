@@ -1,29 +1,42 @@
 package com.noirix.domain.hibernate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.noirix.domain.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Setter;
+import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-
+@Setter
+@Getter
+@EqualsAndHashCode(exclude = {
+        "locations"
+})
+@ToString(exclude = {
+        "locations"
+})
 @Entity
 @Table(name = "users")
 public class HibernateUser {
@@ -59,8 +72,7 @@ public class HibernateUser {
     @Enumerated(EnumType.STRING)
     private Gender gender = Gender.NOT_SELECTED;
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("users")
+    private Set<HibernateLocation> locations = Collections.emptySet();
 }

@@ -11,6 +11,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 public class HibernateConfiguration {
@@ -23,6 +24,7 @@ public class HibernateConfiguration {
         // Package contain entity classes
         factoryBean.setPackagesToScan("com.noirix");
         factoryBean.setDataSource(dataSource);
+        factoryBean.setHibernateProperties(getAdditionalProperties());
         factoryBean.afterPropertiesSet();
         //
         SessionFactory sf = factoryBean.getObject();
@@ -42,6 +44,14 @@ public class HibernateConfiguration {
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(getAdditionalProperties());
         return em;
+    }
+
+    private Properties getAdditionalProperties() {
+        Properties properties = new Properties();
+
+        properties.put("hibernate.show_sql", "true");
+        return properties;
     }
 }
