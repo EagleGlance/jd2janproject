@@ -1,6 +1,8 @@
 package com.noirix.domain.hibernate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.noirix.domain.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +22,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.sql.Timestamp;
@@ -32,10 +35,10 @@ import java.util.Set;
 @Setter
 @Getter
 @EqualsAndHashCode(exclude = {
-        "locations"
+        "locations", "cars"
 })
 @ToString(exclude = {
-        "locations"
+        "locations", "cars"
 })
 @Entity
 @Table(name = "users")
@@ -66,6 +69,7 @@ public class HibernateUser {
     private String email;
 
     @Column(name = "user_password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "gender")
@@ -75,4 +79,8 @@ public class HibernateUser {
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("users")
     private Set<HibernateLocation> locations = Collections.emptySet();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
+    @JsonManagedReference
+    private Set<HibernateCars> cars = Collections.emptySet();
 }

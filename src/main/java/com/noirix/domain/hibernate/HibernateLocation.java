@@ -1,5 +1,6 @@
 package com.noirix.domain.hibernate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,6 +56,7 @@ public class HibernateLocation {
     private Timestamp changed;
 
     @Column
+    @JsonIgnore
     private Boolean visible;
 
     @ManyToMany
