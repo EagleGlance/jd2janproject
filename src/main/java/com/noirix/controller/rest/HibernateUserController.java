@@ -1,5 +1,6 @@
 package com.noirix.controller.rest;
 
+import com.noirix.controller.exceptions.IllegalRequestException;
 import com.noirix.controller.requests.UserCreateRequest;
 import com.noirix.controller.requests.UserUpdateRequest;
 import com.noirix.domain.Gender;
@@ -10,6 +11,7 @@ import com.noirix.util.UserFieldsGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -36,10 +39,14 @@ public class HibernateUserController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveUser(@RequestBody UserCreateRequest request) {
+    public ResponseEntity<Object> saveUser(@Valid @RequestBody UserCreateRequest request, BindingResult result) {
 
         //Spring Converter: request -> entity
         //HibernateUser hibernateUser = converterService.convert(request, HibernateUser.class);
+
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
 
         HibernateUser hibernateUser = HibernateUser.builder()
                 .name(request.getName())
