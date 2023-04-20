@@ -1,6 +1,7 @@
 package com.noirix.controller.rest;
 
 import com.noirix.controller.exceptions.IllegalRequestException;
+import com.noirix.controller.requests.SearchCriteria;
 import com.noirix.controller.requests.UserCreateRequest;
 import com.noirix.controller.requests.UserUpdateRequest;
 import com.noirix.domain.Gender;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -85,6 +88,23 @@ public class HibernateUserController {
 
         one = userService.update(one);
         return new ResponseEntity<>(one, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Object> searchUsersByFullName(@Valid @ModelAttribute SearchCriteria criteria, BindingResult result) {
+        System.out.println(result);
+
+        Double parsedWeight;
+
+        try {
+            parsedWeight = Double.parseDouble(criteria.getWeight());
+        } catch (NumberFormatException e) {
+            parsedWeight = 50D;
+        }
+
+        List<HibernateUser> searchList = userService.search(criteria.getQuery(), parsedWeight);
+
+        return new ResponseEntity<>(Collections.singletonMap("users", searchList), HttpStatus.OK);
     }
 
 }

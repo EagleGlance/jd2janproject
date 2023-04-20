@@ -42,7 +42,7 @@ public class HibernateUserServiceImpl implements HibernateUserService {
 
     @Override
     public List<HibernateUser> search(String query, Double weight) {
-        return null;
+        return userRepository.searchUser(query, weight);
     }
 
     @Override
