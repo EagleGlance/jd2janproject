@@ -11,11 +11,13 @@ import com.noirix.exception.EntityNotFoundException;
 import com.noirix.repository.springdata.UserDataRepository;
 import com.noirix.util.UserFieldsGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +54,13 @@ public class UserDataController {
         //List<Object[]> result = repository.findColumnsFromDifferentTables();
 
         return new ResponseEntity<>(Collections.singletonMap("result", result), HttpStatus.OK);
+    }
+
+    @GetMapping("/page/{page}")
+    public ResponseEntity<Object> testEndpoint(@PathVariable int page) {
+
+        return new ResponseEntity<>(Collections.singletonMap("result",
+                repository.findAll(PageRequest.of(page, 4))), HttpStatus.OK);
     }
 
     @PostMapping
