@@ -15,6 +15,11 @@
     <artifactId>jd2maventest</artifactId>
     <version>1.2-SNAPSHOT</version>
 
+    <modules>
+        <module>common</module>
+        <module>api</module>
+    </modules>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -27,7 +32,7 @@
         <log4j>1.2.17</log4j>
     </properties>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <dependencies>
 
