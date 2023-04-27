@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +37,7 @@ import java.util.Set;
         "users"
 })
 @Entity
+@Cacheable("locations")
 @Table(name = "locations")
 public class HibernateLocation {
 
