@@ -4,13 +4,10 @@ import com.noirix.controller.exceptions.IllegalRequestException;
 import com.noirix.controller.requests.SearchCriteria;
 import com.noirix.controller.requests.UserCreateRequest;
 import com.noirix.controller.requests.UserUpdateRequest;
-import com.noirix.domain.Gender;
-import com.noirix.domain.hibernate.AuthenticationInfo;
 import com.noirix.domain.hibernate.HibernateUser;
-import com.noirix.exception.EntityNotFoundException;
 import com.noirix.repository.springdata.UserDataRepository;
-import com.noirix.util.UserFieldsGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +32,7 @@ public class UserDataController {
 
     private final UserDataRepository repository;
 
-    private final UserFieldsGenerator fieldsGenerator;
+    private final ConversionService conversionService;
 
     @GetMapping
     public ResponseEntity<Object> getAllUsers() {
@@ -66,50 +62,21 @@ public class UserDataController {
     @PostMapping
     public ResponseEntity<Object> saveUser(@Valid @RequestBody UserCreateRequest request, BindingResult result) {
 
-        //Spring Converter: request -> entity
-        //HibernateUser hibernateUser = converterService.convert(request, HibernateUser.class);
-
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
 
-        HibernateUser hibernateUser = HibernateUser.builder()
-                .name(request.getName())
-                .surname(request.getSurname())
-                .birthDate(request.getBirthDate())
-                .weight(request.getWeight())
-                .gender(Gender.NOT_SELECTED)
-                .fullName(request.getFullName())
-                .build();
-
-        String generateEmail = fieldsGenerator.generateEmail(hibernateUser);
-        String generatePassword = fieldsGenerator.generatePassword();
-        AuthenticationInfo info = new AuthenticationInfo(generateEmail, generatePassword);
-
-        hibernateUser.setAuthenticationInfo(info);
-
+        HibernateUser hibernateUser = conversionService.convert(request, HibernateUser.class);
         hibernateUser = repository.save(hibernateUser);
         return new ResponseEntity<>(hibernateUser, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateUser(Principal principal, @RequestBody UserUpdateRequest request) {
+    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserUpdateRequest request) {
 
-        //Spring Converter: request -> entity
-        //HibernateUser hibernateUser = converterService.convert(request, HibernateUser.class);
-
-        HibernateUser one = repository.findById(request.getId()).orElseThrow(EntityNotFoundException::new);
-
-        one.setId(request.getId());
-        one.setName(request.getName());
-        one.setSurname(request.getSurname());
-        one.setBirthDate(request.getBirthDate());
-        one.setWeight(request.getWeight());
-        one.setGender(Gender.valueOf(request.getGender()));
-        one.setFullName(request.getFullName());
-
-        one = repository.save(one);
-        return new ResponseEntity<>(one, HttpStatus.CREATED);
+        HibernateUser hibernateUser = conversionService.convert(request, HibernateUser.class);
+        hibernateUser = repository.save(hibernateUser);
+        return new ResponseEntity<>(hibernateUser, HttpStatus.OK);
     }
 
     @GetMapping("/search")

@@ -32,4 +32,6 @@ public class UserCreateRequest {
 
     @NotNull
     private Double weight;
+
+    private String gender;
 }

@@ -12,6 +12,4 @@ import lombok.Setter;
 public class UserUpdateRequest extends UserCreateRequest {
 
     private Long id;
-
-    private String gender;
 }
