@@ -6,8 +6,14 @@ import com.noirix.controller.requests.UserCreateRequest;
 import com.noirix.controller.requests.UserUpdateRequest;
 import com.noirix.domain.hibernate.HibernateUser;
 import com.noirix.repository.springdata.UserDataRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +42,17 @@ public class UserDataController {
 
     private final ConversionService conversionService;
 
+    @Operation(
+            summary = "Spring Data User Find All Search",
+            description = "Find All Users without limitations",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "OK",
+                            description = "Successfully loaded Users",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = HibernateUser.class))
+                    )
+            }
+    )
     @GetMapping
     public ResponseEntity<Object> getAllUsers() {
         List<HibernateUser> users = repository.findAll();
@@ -54,9 +71,21 @@ public class UserDataController {
         return new ResponseEntity<>(Collections.singletonMap("result", result), HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Spring Data User Search with Pageable Params",
+            description = "Load page by number with sort and offset params",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "OK",
+                            description = "Successfully loaded Users",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = PageImpl.class))
+                    )
+            }
+    )
     @GetMapping("/page/{page}")
-    public ResponseEntity<Object> testEndpoint(@PathVariable int page) {
-
+    public ResponseEntity<Object> testEndpoint(@Parameter(name = "page", example = "1", required = true) @PathVariable int page) {
         return new ResponseEntity<>(Collections.singletonMap("result",
                 repository.findAll(PageRequest.of(page, 4))), HttpStatus.OK);
     }
