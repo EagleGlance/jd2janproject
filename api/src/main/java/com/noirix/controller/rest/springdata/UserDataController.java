@@ -4,10 +4,12 @@ import com.noirix.controller.exceptions.IllegalRequestException;
 import com.noirix.controller.requests.SearchCriteria;
 import com.noirix.controller.requests.UserCreateRequest;
 import com.noirix.controller.requests.UserUpdateRequest;
+import com.noirix.domain.Gender;
 import com.noirix.domain.hibernate.HibernateUser;
 import com.noirix.repository.springdata.UserDataRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -112,10 +114,38 @@ public class UserDataController {
         return new ResponseEntity<>(hibernateUser, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Spring Data User Search According to query params",
+            description = "Spring Data User Search According to query params",
+            parameters = {
+                    @Parameter(name = "query",
+                            required = true,
+                            in = ParameterIn.QUERY,
+                            schema = @Schema(requiredMode = Schema.RequiredMode.REQUIRED, example = "query", type = "string", description = "text query")),
+                    @Parameter(name = "weight",
+                            required = true,
+                            in = ParameterIn.QUERY,
+                            schema = @Schema(requiredMode = Schema.RequiredMode.REQUIRED, example = "50", type = "double", description = "user weight")),
+                    @Parameter(name = "gender",
+                            required = true,
+                            in = ParameterIn.QUERY,
+                            schema = @Schema(requiredMode = Schema.RequiredMode.REQUIRED, example = "NOT_SELECTED", type = "Gender", implementation = Gender.class, description = "user gender"))
+            },
+            responses = {
+                    @ApiResponse(
+                            responseCode = "OK",
+                            description = "Successfully loaded Users",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = HibernateUser.class)
+                            )
+                    )
+            }
+    )
     @GetMapping("/search")
     public ResponseEntity<Object> searchUsersByFullName(
-            @Valid @ModelAttribute SearchCriteria criteria, BindingResult result) {
-        System.out.println(result);
+            @Parameter(hidden = true) @Valid @ModelAttribute SearchCriteria criteria,
+            BindingResult result) {
 
         Double parsedWeight;
 
@@ -125,7 +155,7 @@ public class UserDataController {
             parsedWeight = 50D;
         }
 
-        List<HibernateUser> searchList = Collections.emptyList();//userService.search(criteria.getQuery(), parsedWeight);
+        List<HibernateUser> searchList = Collections.emptyList();
 
         return new ResponseEntity<>(Collections.singletonMap("users", searchList), HttpStatus.OK);
     }
