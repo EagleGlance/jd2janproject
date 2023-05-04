@@ -113,7 +113,8 @@ public class UserDataController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Object> searchUsersByFullName(@Valid @ModelAttribute SearchCriteria criteria, BindingResult result) {
+    public ResponseEntity<Object> searchUsersByFullName(
+            @Valid @ModelAttribute SearchCriteria criteria, BindingResult result) {
         System.out.println(result);
 
         Double parsedWeight;

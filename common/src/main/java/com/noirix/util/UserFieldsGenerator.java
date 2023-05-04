@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class UserFieldsGenerator {
 
     public String generateEmail(HibernateUser user) {
-        return user.getName() + "_" + user.getSurname() + "_" + user.getBirthDate().getTime() + "@gmail.com";
+        return user.getName() + "_" + user.getSurname() + "_" + user.getBirthDate() + "@gmail.com";
     }
 
     public String generatePassword() {

@@ -28,7 +28,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Set;
 
@@ -59,7 +59,7 @@ public class HibernateUser {
     private String surname;
 
     @Column(name = "birth_date")
-    private Timestamp birthDate;
+    private LocalDateTime birthDate;
 
     @Column(name = "full_name")
     private String fullName;

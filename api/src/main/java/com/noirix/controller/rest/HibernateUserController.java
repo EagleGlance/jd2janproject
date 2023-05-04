@@ -54,7 +54,7 @@ public class HibernateUserController {
         HibernateUser hibernateUser = HibernateUser.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
-                .birthDate(request.getBirthDate())
+                .birthDate(request.getBirthDate().toLocalDateTime())
                 .weight(request.getWeight())
                 .gender(Gender.NOT_SELECTED)
                 .fullName(request.getFullName())
@@ -81,9 +81,9 @@ public class HibernateUserController {
         one.setId(request.getId());
         one.setName(request.getName());
         one.setSurname(request.getSurname());
-        one.setBirthDate(request.getBirthDate());
+        one.setBirthDate(request.getBirthDate().toLocalDateTime());
         one.setWeight(request.getWeight());
-        one.setGender(Gender.valueOf(request.getGender()));
+        one.setGender(request.getGender());
         one.setFullName(request.getFullName());
 
         one = userService.update(one);
