@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -40,15 +41,31 @@ public class HibernateUserRepositoryImpl implements HibernateUserRepository {
     public List<HibernateUser> findAll() {
 
         final String findAllHQL = "select u from HibernateUser u";
-//        //final String findAllNative = "select * from users";
+
+        try (Session session = sessionFactory.openSession();
+             Session secondSession = sessionFactory.openSession()) {
+
+            final String ids = "12, 23, 24, 25, 26, 27, 28 ";
+            final Long userId = 26L;
+
+            /*Named Query Cache Hibernate*/
+//            Query<HibernateUser> idsSearch = session.createNamedQuery("m_users_multiple_ids_search", HibernateUser.class);
+//            idsSearch.setParameter("userIds", userId);
+//            List<HibernateUser> firstResult = idsSearch.getResultList();
 //
-//        try (Session session = sessionFactory.openSession()) {
-//            return session.createQuery(findAllHQL, HibernateUser.class).getResultList();
-//        }
+//            Query<HibernateUser> idsSearch2 = secondSession.createNamedQuery("m_users_multiple_ids_search", HibernateUser.class);
+//            idsSearch2.setParameter("userIds", userId);
+//            List<HibernateUser> secondResult = idsSearch2.getResultList();
 
 
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        return entityManager.createQuery(findAllHQL, HibernateUser.class).getResultList();
+            Query<HibernateUser> idsSearch = session.createQuery(findAllHQL, HibernateUser.class);
+            List<HibernateUser> firstResult = idsSearch.getResultList();
+
+            Query<HibernateUser> idsSearch2 = secondSession.createQuery(findAllHQL, HibernateUser.class);
+            List<HibernateUser> secondResult = idsSearch2.getResultList();
+
+            return firstResult;
+        }
     }
 
     @Override

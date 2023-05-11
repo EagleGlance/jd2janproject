@@ -10,9 +10,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -45,6 +49,9 @@ import java.util.Set;
 })
 @Entity
 @Table(name = "users")
+@NamedQuery(name = "m_users_multiple_ids_search", query = "select u from HibernateUser u where u.id in (:userIds)", cacheable = true)
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class HibernateUser {
 
     @Id
@@ -78,14 +85,17 @@ public class HibernateUser {
     @Enumerated(EnumType.STRING)
     private Gender gender = Gender.NOT_SELECTED;
 
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("users")
     private Set<HibernateLocation> locations = Collections.emptySet();
 
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
     @JsonManagedReference
     private Set<HibernateCars> cars = Collections.emptySet();
 
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
     @JsonManagedReference
     private HibernatePersonalDocument document;

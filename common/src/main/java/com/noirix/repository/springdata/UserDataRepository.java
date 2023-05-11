@@ -38,4 +38,7 @@ public interface UserDataRepository extends
     @Query(value = "update users set full_name = :email ", nativeQuery = true)
     void updateField(String email);
 
+    @Query(name = "m_users_multiple_ids_search")
+    List<HibernateUser> namedQuery(String userIds);
+
 }

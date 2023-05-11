@@ -27,6 +27,17 @@ spring:
       hibernate:
         current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
         format_sql: true
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+        show_sql: true
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        connection:
+          characterEncoding: utf8mb4
+          CharSet: utf8mb4
+          useUnicode: true
 
 ---
 
