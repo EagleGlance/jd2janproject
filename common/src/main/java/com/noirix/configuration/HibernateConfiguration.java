@@ -65,7 +65,7 @@ public class HibernateConfiguration {
         properties.put("hibernate.cache.use_query_cache", "true");
         properties.put("javax.persistence.sharedCache.mode", "ALL");
 
-        properties.put("hibernate.javax.cache.provider", "org.ehcache.jsr107.EhcacheCachingProvider");
+        properties.put("hibernate.javax.cache.provider", "net.sf.ehcache.hibernate.EhCacheProvider");
         properties.put("hibernate.cache.ehcache.missing_cache_strategy", "create");
 
         return properties;
