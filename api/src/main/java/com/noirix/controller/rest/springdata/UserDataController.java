@@ -5,8 +5,10 @@ import com.noirix.controller.requests.SearchCriteria;
 import com.noirix.controller.requests.UserCreateRequest;
 import com.noirix.controller.requests.UserUpdateRequest;
 import com.noirix.domain.Gender;
+import com.noirix.domain.hibernate.AuthenticationInfo;
 import com.noirix.domain.hibernate.HibernateUser;
 import com.noirix.repository.springdata.UserDataRepository;
+import com.noirix.security.config.JWTConfiguration;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -43,6 +46,10 @@ public class UserDataController {
     private final UserDataRepository repository;
 
     private final ConversionService conversionService;
+
+    private final PasswordEncoder encoder;
+
+    private final JWTConfiguration configuration;
 
     @Operation(
             summary = "Spring Data User Find All Search",
@@ -158,5 +165,29 @@ public class UserDataController {
         List<HibernateUser> searchList = Collections.emptyList();
 
         return new ResponseEntity<>(Collections.singletonMap("users", searchList), HttpStatus.OK);
+    }
+
+
+    @PutMapping("/passwords")
+    public ResponseEntity<Object> updateUsersPasswords() {
+
+        List<HibernateUser> all = repository.findAll();
+
+        for (HibernateUser hibernateUser : all) {
+
+            AuthenticationInfo authenticationInfo = hibernateUser.getAuthenticationInfo();
+
+            String password = authenticationInfo.getPassword();
+            String encodedPassword = encoder.encode(password + configuration.getServerPasswordSalt());
+
+            authenticationInfo.setPassword(encodedPassword);
+
+            hibernateUser.setAuthenticationInfo(authenticationInfo);
+
+            repository.save(hibernateUser);
+        }
+
+        return new ResponseEntity<>(all.size(), HttpStatus.OK);
+
     }
 }
