@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false" monitoring="autodetect" dynamicConfig="true">
+
+<defaultCache
+        eternal="false"
+        maxElementsInMemory="1000"
+        overflowToDisk="false"
+        diskPersistent="false"
+        timeToIdleSeconds="0"
+        timeToLiveSeconds="600"
+        memoryStoreEvictionPolicy="LRU"/>
+
+<cache name="com.noirix.domain.hibernate.HibernateUser"
+       maxEntriesLocalHeap="10000"
+       maxEntriesLocalDisk="1000"
+       eternal="false"
+       diskSpoolBufferSizeMB="20"
+       timeToIdleSeconds="300"
+       timeToLiveSeconds="600"
+       memoryStoreEvictionPolicy="LFU"
+       transactionalMode="off">
+</cache>
+    <cache name="com.noirix.domain.hibernate.HibernateLocation"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+    <cache name="com.noirix.domain.hibernate.HibernateCars"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+    <cache name="com.noirix.domain.hibernate.HibernatePersonalDocument"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+</ehcache>
