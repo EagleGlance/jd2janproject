@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserDataRepository extends
@@ -33,6 +34,7 @@ public interface UserDataRepository extends
     @Query(value = "select u from HibernateUser u where u.authenticationInfo.email = :email and u.surname = :surname")
     List<HibernateUser> findByHQLQuery(String email, @Param("surname") String name);
 
+    Optional<HibernateUser> findByAuthenticationInfoEmail(String email);
 
     @Modifying(flushAutomatically = true)
     @Query(value = "update users set full_name = :email ", nativeQuery = true)

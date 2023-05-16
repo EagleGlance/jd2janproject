@@ -58,6 +58,6 @@ google:
 
 jwtconfig:
   secret: secret
-  expiration: 60000
+  expiration: 6000000
   passwordSalt: 142ddefd-5029-4088-90a8-e7bc78d1e0d6
 

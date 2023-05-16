@@ -42,10 +42,10 @@ import java.util.Set;
 @Setter
 @Getter
 @EqualsAndHashCode(exclude = {
-        "locations", "cars"
+        "locations", "cars", "roles"
 })
 @ToString(exclude = {
-        "locations", "cars"
+        "locations", "cars", "roles"
 })
 @Entity
 @Table(name = "users")
@@ -94,6 +94,11 @@ public class HibernateUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
     @JsonManagedReference
     private Set<HibernateCars> cars = Collections.emptySet();
+
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
+    @JsonManagedReference
+    private Set<HibernateRole> roles = Collections.emptySet();
 
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
